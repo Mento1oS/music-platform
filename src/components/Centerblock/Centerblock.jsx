@@ -1,6 +1,34 @@
-import c from './Centrerblock.module.css';
-
+import c from './Centerblock.module.css';
+import PlayList__item from '../PlayListItem/PlayListItem';
+import Dropout from '../Dropout/Dropout';
+import { useState } from 'react';
 function Centerblock(){
+    const [isSkeleton, setIsSkeleton] = useState(true);
+    const [dropoutStatus, setDropoutStatus] = useState([false, false, false]);
+    const singers=['messi', 'Noize MC', 'RHCP', 'Pyrokinesis', 'Joy Division', 'Lol', 'mocker'];
+    const years = ['1987', '2022', '1995', '2015', '1980'];
+    const genres = ['rock', 'rap', 'hip-hop', 'post-punk', 'alternative rock', 'punk-rock'];
+    const timeOut = setTimeout(()=>{
+      setIsSkeleton(false);
+    }, 5000);
+    const switchHandle=(e)=>{
+      const target = e.target;
+      const parent = target.parentElement;
+      const children = Array.from(parent.children);
+      const index= children.indexOf(target)-1;
+      switch(index){
+        case 0:
+          setDropoutStatus([!dropoutStatus[0], false, false]);
+          break;
+        case 1:
+          setDropoutStatus([false, !dropoutStatus[1], false]);
+          break;
+        case 2:
+          setDropoutStatus([false, false, !dropoutStatus[2]]);
+          break;
+      }
+      
+    }
     return(
         <div className={`${c.main__centerblock} ${c.centerblock}`}>
             <div className={`${c.centerblock__search} ${c.search}`}>
@@ -17,13 +45,15 @@ function Centerblock(){
             <h2 className={c.centerblock__h2}>Треки</h2>
             <div className={`${c.centerblock__filter} ${c.filter}`}>
               <div className={c.filter__title}>Искать по:</div>
-              <div className={`${c.filter__button} ${c.button_author} ${c._btn_text}`}>
+              <div onClick={switchHandle} className={`${c.filter__button} ${c.button_author} ${c._btn_text} ${dropoutStatus[0]&& c.active}`}>
                 исполнителю
+                {dropoutStatus[0]&&<div className={`${c.filter__list__wrapper} ${c.author__list}`}><Dropout data={singers}/></div>}
               </div>
-              <div className={`${c.filter__button} ${c.button_year} ${c._btn_text}`}>
-                году выпуска
+              <div onClick={switchHandle} className={`${c.filter__button} ${c.button_year} ${c._btn_text} ${dropoutStatus[1]&& c.active}`}>
+                году выпуска {dropoutStatus[1] && <div className={`${c.filter__list__wrapper} ${c.year__list}`}><Dropout data={years}/></div>}
               </div>
-              <div className={`${c.filter__button} ${c.button_genre} ${c._btn_text}`}>жанру</div>
+              <div onClick={switchHandle} className={`${c.filter__button} ${c.button_genre} ${c._btn_text} ${dropoutStatus[2]&& c.active}`}>
+                жанру{dropoutStatus[2] && <div className={`${c.filter__list__wrapper} ${c.genre__list}`}><Dropout data={genres}/></div>}</div>
             </div>
             <div className={c.centerblock__content}>
               <div className={`${c.content__title} ${c.playlist_title}`}>
@@ -37,469 +67,26 @@ function Centerblock(){
                 </div>
               </div>
               <div className={`${c.content__playlist} ${c.playlist}`}>
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Guilt <span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">Nero</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Welcome Reality</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>4:44</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Elektro <span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">Dynoro, Outwork, Mr. Gee</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Elektro</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>2:22</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">I’m Fire <span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">Ali Bakgor</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">I’m Fire</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>2:22</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Non Stop<span className={c.track__title_span}>(Remix)</span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">Стоункат, Psychopath</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Non Stop</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>4:12</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Run Run
-                          <span className={c.track__title_span}>(feat. AR/CO)</span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">Jaded, Will Clarke, AR/CO</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Run Run</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>2:54</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Eyes on Fire
-                          <span className={c.track__title_span}>(Zeds Dead Remix)</span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">Blue Foundation, Zeds Dead</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Eyes on Fire</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>5:20</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Mucho Bien
-                          <span className={c.track__title_span}>(Hi Profile Remix)</span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">HYBIT, Mr. Black, Offer Nissim, Hi Profile</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Mucho Bien</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>3:41</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Knives n Cherries
-                          <span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">minthaze</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Captivating</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>1:48</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Knives n Cherries
-                          <span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">minthaze</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Captivating</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>1:48</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Knives n Cherries<span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">minthaze</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Captivating</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>1:48</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Knives n Cherries<span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">minthaze</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Captivating</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>1:48</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Knives n Cherries
-                          <span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">minthaze</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Captivating</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>1:48</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Knives n Cherries<span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">minthaze</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Captivating</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>1:48</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Knives n Cherries
-                          <span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">minthaze</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Captivating</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>1:48</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">How Deep Is Your Love
-                          <span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">Calvin Harris, Disciples</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://" >How Deep Is Your Love</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>3:32</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">Morena <span className={c.track__title_span}></span></a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://">Tom Boxer</a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://">Soundz Made in Romania</a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}>3:36</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={c.playlist__item}>
-                  <div className={`${c.playlist__track} ${c.track}`}>
-                    <div className={c.track__title}>
-                      <div className={c.track__title_image}>
-                        <svg className={c.track__title_svg} alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </svg>
-                      </div>
-                      <div className={c.track__title_text}>
-                        <a className={c.track__title_link} href="http://">
-                          <span className={c.track__title_span}></span>
-                        </a>
-                      </div>
-                    </div>
-                    <div className={c.track__author}>
-                      <a className={c.track__author_link} href="http://"></a>
-                    </div>
-                    <div className={c.track__album}>
-                      <a className={c.track__album_link} href="http://"></a>
-                    </div>
-                    <div className={c.track__time}>
-                      <svg className={c.track__time_svg} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                      <span className={c.track__time_text}></span>
-                    </div>
-                  </div>
-                </div>
+                <PlayList__item isSkeleton={isSkeleton} title='Guilt' author='Nero' album='Welcome Reality' duration='4:44'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Elektro' author='Dynoro, Outwork, Mr. Gee' album='Elektro' duration='2:22'/>
+                <PlayList__item isSkeleton={isSkeleton} title='I’m Fire' author='Ali Bakgor' album='I’m Fire' duration='2:22'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Non Stop' span="(Remix)" author='Стоункат, Psychopath' album='Non Stop' duration='4:12'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Run Run' span='(feat. AR/CO)' author='Jaded, Will Clarke, AR/CO' album='Run Run' duration='2:54'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Eyes on Fire' span='(Zeds Dead Remix)' author='Blue Foundation, Zeds Dead' album='Eyes on Fire' duration='5:20'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Mucho Bien' span='(Hi Profile Remix)' author='HYBIT, Mr. Black, Offer Nissim, Hi Profile' album='Mucho Bien' duration='3:41'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
+                <PlayList__item isSkeleton={isSkeleton} title='How Deep Is Your Love' author='Calvin Harris, Disciples' album='How Deep Is Your Love' duration='3:32'/>
+                <PlayList__item isSkeleton={isSkeleton} title='Morena' author='Tom Boxer' album='Soundz Made in Romania' duration='3:36'/>
+                <PlayList__item isSkeleton={isSkeleton} title='' span='' author='' album='' duration=''/>
+                
               </div>
             </div>
           </div>
