@@ -8,9 +8,9 @@ function Centerblock(){
     const singers=['messi', 'Noize MC', 'RHCP', 'Pyrokinesis', 'Joy Division', 'Lol', 'mocker'];
     const years = ['1987', '2022', '1995', '2015', '1980'];
     const genres = ['rock', 'rap', 'hip-hop', 'post-punk', 'alternative rock', 'punk-rock'];
-    // const timeOut = setTimeout(()=>{
-    //   setIsSkeleton(false);
-    // }, 5000);
+    const timeOut = setTimeout(()=>{
+      setIsSkeleton(false);
+    }, 5000);
     const switchHandle=(e)=>{
       const target = e.target;
       const parent = target.parentElement;
