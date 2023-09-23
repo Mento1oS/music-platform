@@ -10,13 +10,17 @@ export default function PlayList__item(props){
                           (<use xlinkHref="img/icon/sprite.svg#icon-note"></use>)}
                         </svg>
                       </div>
-                      <div className={c.track__title_text}>{props.isSkeleton ? (<img className={c.col01} src="/img/Rectangle11.png"></img>):(<a className={c.track__title_link} href="http://">{props.title} <span className={c.track__title_span}>{props.span? props.span: ''}</span></a>)}
+                      <div className={c.track__title_text}>
+                        {props.isSkeleton ? <div className={c.column1}></div>
+                        :<a className={c.track__title_link} href="http://">{props.title} <span className={c.track__title_span}>{props.span? props.span: ''}</span></a>}
                       </div>
                     </div>
                     <div className={`${c.track__author}`}>
-                      {props.isSkeleton?<img className={c.col02} src="/img/Rectangle12.png"></img>:<a className={c.track__author_link} href="http://">{props.author}</a>}
+                      {props.isSkeleton? <div className={c.column2}></div>
+                      :<a className={c.track__author_link} href="http://">{props.author}</a>}
                     </div>
-                    {props.isSkeleton?<img src="/img/Rectangle13.png" className={c.col03}></img>:<><div className={c.track__album}>
+                    {props.isSkeleton? <div className={c.column3}></div>
+                    :<><div className={c.track__album}>
                       <a className={c.track__album_link} href="http://">{props.album}</a>
                     </div>
                     <div className={c.track__time}>

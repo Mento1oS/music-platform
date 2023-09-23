@@ -126,17 +126,19 @@
     text-align: right;
     color: #696969;
   }
-  .col01 {
-    width: 420px;
-  }
-  
-  .col02 {
-    width: 400px;
-    text-align: left;
-  }
-  
-  .col03 {
-    width: 380px;
-    text-align: left;
-  }
+.column1{
+  height: 19px;
+  background-color: rgb(49,49,49);
+  width: 18vw;
+}
+.column2{
+  height: 19px;
+  width: 22vw;
+  background-color: rgb(49,49,49);
+}
+.column3{
+  background-color: rgb(49,49,49);
+  height: 19px;
+  width: 22vw;
+}
   
