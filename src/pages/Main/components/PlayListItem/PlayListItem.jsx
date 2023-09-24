@@ -10,10 +10,10 @@ export default function PlayList__item(props){
                       (<use xlinkHref="img/icon/sprite.svg#icon-note"></use>)}
                   </svg>
                 </div>
-                <div className={c.track__title_text}>
+                
                   {props.isSkeleton ? <div className={c.column1}></div>
-                    :<a className={c.track__title_link} href="http://">{props.title} <span className={c.track__title_span}>{props.span? props.span: ''}</span></a>}
-                </div>
+                    :<div className={c.track__title_text}><a className={c.track__title_link} href="http://">{props.title} <span className={c.track__title_span}>{props.span? props.span: ''}</span></a></div>}
+                
               </div>
               <div className={`${c.track__author}`}>
                 {props.isSkeleton? <div className={c.column2}></div>

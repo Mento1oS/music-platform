@@ -90,7 +90,7 @@
     justify-content: flex-start;
   }
   
-  .track__author_link {
+  .track__author_link{
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -99,11 +99,11 @@
     text-align: left;
   }
   
-  .track__album {
+  .track__album{
     width: 245px;
   }
   
-  .track__album_link {
+  .track__album_link{
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -127,18 +127,22 @@
     color: #696969;
   }
 .column1{
+  text-align: left;
   height: 19px;
+  width: 75%;
   background-color: rgb(49,49,49);
-  width: 18vw;
 }
 .column2{
+  text-align: left;
   height: 19px;
-  width: 22vw;
+  width: 90%;
+  margin-left: -5%;
   background-color: rgb(49,49,49);
 }
 .column3{
+  text-align: left;
+  width: 30%;
   background-color: rgb(49,49,49);
   height: 19px;
-  width: 22vw;
 }
   
