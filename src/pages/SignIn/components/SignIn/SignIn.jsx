@@ -6,7 +6,8 @@ export default function SignIn(props){
     mail:'',
     password:''});
   const navigate = useNavigate();
-    const redirect=()=>{
+    const handleSubmit=(e)=>{
+      e.preventDefault();
       if(signIn.password!=='' && signIn.mail!=='' && signIn.mail===props.user.mail && signIn.password===props.user.password){
         props.setIsToPass(true);
       }
@@ -17,7 +18,7 @@ export default function SignIn(props){
     <div className={c.wrapper}>
       <div className={c.container__enter}>
         <div className={c.modal__block}>
-          <form onSubmit={e=>{e.preventDefault()}} className={c.modal__form__login} action="#">
+          <form onSubmit={handleSubmit} className={c.modal__form__login} action="#">
             <NavLink to="/">
               <div className={c.modal__logo}>
                 <img src="../img/logo_modal.png" alt="logo" />
@@ -43,7 +44,7 @@ export default function SignIn(props){
               placeholder="Пароль"
               value={signIn.password}
             />
-            <button onClick={redirect} className={c.modal__btn__enter}>
+            <button className={c.modal__btn__enter}>
                 Войти
             </button>
             <button className={c.modal__btn__signup}>

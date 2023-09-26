@@ -2,7 +2,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import c from './SignUp.module.css';
 export default function SignUp(props){
   const navigate = useNavigate();
-  const redirect =()=>{
+  const handleSubmit =(e)=>{
+    e.preventDefault();
     if(props.user.password===props.user.password__double&&props.user.password!==''&& props.user.mail!==''){
       props.setIsToPass(true)
     }
@@ -18,7 +19,7 @@ export default function SignUp(props){
     <div className={c.wrapper}>
       <div className={c.container__signup}>
         <div className={c.modal__block}>
-          <form onSubmit={(e)=>{e.preventDefault();}} className={c.modal__form__login}>
+          <form onSubmit={handleSubmit} className={c.modal__form__login}>
             <NavLink to="/">
               <div className={c.modal__logo}>
                 <img src="../img/logo_modal.png" alt="logo" />
@@ -55,7 +56,7 @@ export default function SignUp(props){
               placeholder="Повторите пароль"
               value={props.user.password__double}
             />
-            <button onClick={redirect} className={c.modal__btn__signup__ent}>
+            <button className={c.modal__btn__signup__ent}>
               Зарегистрироваться
             </button>
           </form>
