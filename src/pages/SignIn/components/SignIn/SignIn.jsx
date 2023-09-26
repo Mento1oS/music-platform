@@ -1,10 +1,18 @@
 import { useState } from 'react';
 import c from './SignIn.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 export default function SignIn(props){
   const [signIn, setSignIn] = useState({
     mail:'',
     password:''});
+  const navigate = useNavigate();
+    const redirect=()=>{
+      if(signIn.password!=='' && signIn.mail!=='' && signIn.mail===props.user.mail && signIn.password===props.user.password){
+        props.setIsToPass(true);
+      }
+      setSignIn({mail:'', password:''});
+      navigate('/');
+    }
   return(
     <div className={c.wrapper}>
       <div className={c.container__enter}>
@@ -18,7 +26,6 @@ export default function SignIn(props){
             <input onChange={(e)=>{setSignIn({
               ...signIn,
               mail: e.target.value});
-              (signIn.password!=='' && e.target.value!=='' && e.target.value===props.user.mail && signIn.password===props.user.password)?props.setIsToPass(true): props.setIsToPass(false);
             }}
               className={`${c.modal__input} ${c.login}`}
               type="text"
@@ -29,7 +36,6 @@ export default function SignIn(props){
             <input onChange={(e)=>{setSignIn({
               ...signIn,
               password: e.target.value});
-              (signIn.mail!=='' && e.target.value!=='' && e.target.value===props.user.password && signIn.mail===props.user.mail)?props.setIsToPass(true): props.setIsToPass(false);
             }}
               className={`${c.modal__input} ${c.password}`}
               type="password"
@@ -37,20 +43,11 @@ export default function SignIn(props){
               placeholder="Пароль"
               value={signIn.password}
             />
-            <button className={c.modal__btn__enter}>
-              {props.isToPass? 
-                <NavLink to="/">Войти</NavLink> :
-                <a onClick={(e)=>{
-                  e.preventDefault();
-                  setSignIn({
-                    ...signIn,
-                    password: ''
-                  });}}>
-                    Войти
-                </a>}
+            <button onClick={redirect} className={c.modal__btn__enter}>
+                Войти
             </button>
             <button className={c.modal__btn__signup}>
-              <NavLink to="/signup">Зарегистрироваться</NavLink>
+              <NavLink className={c.signup__link} to="/signup">Зарегистрироваться</NavLink>
             </button>
           </form>
         </div>

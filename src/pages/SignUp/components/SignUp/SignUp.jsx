@@ -1,6 +1,19 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import c from './SignUp.module.css';
 export default function SignUp(props){
+  const navigate = useNavigate();
+  const redirect =()=>{
+    if(props.user.password===props.user.password__double&&props.user.password!==''&& props.user.mail!==''){
+      props.setIsToPass(true)
+    }
+    else{
+      props.setIsToPass(false);
+    }
+    props.setUser({...props.user,
+      password:'',
+      password__double:''});
+    navigate('/');
+  }
   return(
     <div className={c.wrapper}>
       <div className={c.container__signup}>
@@ -23,7 +36,6 @@ export default function SignUp(props){
             <input
               className={`${c.modal__input} ${c.password__first}`}
               onChange={(e)=>{
-                (e.target.value===props.user.password__double&&e.target.value!==''&& props.user.mail!=='')?props.setIsToPass(true):props.setIsToPass(false)
                 props.setUser({...props.user,
                 password: e.target.value});
               }}
@@ -35,7 +47,6 @@ export default function SignUp(props){
             <input
               className={`${c.modal__input} ${c.password__double}`}
               onChange={(e)=>{
-                (e.target.value===props.user.password && e.target.value!=='' && props.user.mail!=='')?props.setIsToPass(true):props.setIsToPass(false)
                 props.setUser({...props.user,
                 password__double: e.target.value});
               }}
@@ -44,13 +55,8 @@ export default function SignUp(props){
               placeholder="Повторите пароль"
               value={props.user.password__double}
             />
-            <button className={c.modal__btn__signup__ent}>
-              {props.isToPass?<NavLink to='/'>Зарегистрироваться</NavLink>:
-              <a onClick={(e)=>{
-                e.preventDefault()
-                props.setUser({...props.user,
-                password:'',
-                password__double:''})}}>Зарегистрироваться</a>}
+            <button onClick={redirect} className={c.modal__btn__signup__ent}>
+              Зарегистрироваться
             </button>
           </form>
         </div>
