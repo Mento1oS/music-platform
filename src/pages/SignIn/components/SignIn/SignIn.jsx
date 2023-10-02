@@ -6,14 +6,39 @@ export default function SignIn(props){
     mail:'',
     password:''});
   const navigate = useNavigate();
-    const handleSubmit=(e)=>{
-      e.preventDefault();
-      if(signIn.password!=='' && signIn.mail!=='' && signIn.mail===props.user.mail && signIn.password===props.user.password){
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    if(signIn.mail!=='' && signIn.password!==''){
+      fetch("https://skypro-music-api.skyeng.tech/user/login/", {
+        method: "POST",
+        body: JSON.stringify({
+          email: signIn.mail,
+          password: signIn.password,
+        }),
+        headers: {
+          "content-type": "application/json",
+        },})
+      .then((response) => { 
+        if(response.ok !== true){
+          throw new Error(response.statusText)
+        }
+        return response.json()})
+      .then((response)=>{
+        console.log(response);
         props.setIsToPass(true);
+        props.setUser({
+          mail: signIn.mail,
+          password: signIn.password,
+          password__double: signIn.password});
+        setSignIn({...signIn, password:''});
+        navigate('/')})
+      .catch((error)=>{
+        props.setIsToPass(false);
+        setSignIn({...signIn,
+        password:''});
+        alert(error)})
       }
-      setSignIn({mail:'', password:''});
-      navigate('/');
-    }
+  }
   return(
     <div className={c.wrapper}>
       <div className={c.container__enter}>

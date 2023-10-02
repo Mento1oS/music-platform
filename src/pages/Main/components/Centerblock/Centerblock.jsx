@@ -63,26 +63,22 @@ function Centerblock(props){
                 </div>
               </div>
               <div className={`${c.content__playlist} ${c.playlist}`}>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Elektro' author='Dynoro, Outwork, Mr. Gee' album='Elektro' duration='2:22'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='I’m Fire' author='Ali Bakgor' album='I’m Fire' duration='2:22'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Guilt' author='Nero' album='Welcome Reality' duration='4:44'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Non Stop' span="(Remix)" author='Стоункат, Psychopath' album='Non Stop' duration='4:12'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Run Run' span='(feat. AR/CO)' author='Jaded, Will Clarke, AR/CO' album='Run Run' duration='2:54'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Eyes on Fire' span='(Zeds Dead Remix)' author='Blue Foundation, Zeds Dead' album='Eyes on Fire' duration='5:20'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Mucho Bien' span='(Hi Profile Remix)' author='HYBIT, Mr. Black, Offer Nissim, Hi Profile' album='Mucho Bien' duration='3:41'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Knives n Cherries' author='minthaze' album='Captivating' duration='1:48'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='How Deep Is Your Love' author='Calvin Harris, Disciples' album='How Deep Is Your Love' duration='3:32'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='Morena' author='Tom Boxer' album='Soundz Made in Romania' duration='3:36'/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' span='' author='' album='' duration=''/>
-                
+                {props.isSkeleton?
+                <><PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
+                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/></>
+                :props.tracks.map((elem=><PlayList__item key={elem.id} isPlaying={props.isPlaying} setIsPlaying={props.setIsPlaying} setCurrentSong={props.setCurrentSong} currentSong={props.currentSong} isSkeleton={props.isSkeleton} song={elem}/>))
+                }
               </div>
             </div>
           </div>

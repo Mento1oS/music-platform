@@ -23,7 +23,12 @@ function Nav(props){
                   <NavLink to="/myplaylist" className={c.menu__link}>Мой плейлист</NavLink>
                 </li>
                 <li className={c.menu__item}>
-                  <NavLink to='/signin' className={c.menu__link}>Войти</NavLink>
+                  <NavLink onClick={()=>{
+                    props.setUser({
+                      mail:'', 
+                      password:'', 
+                      password__double:''})
+                    props.setIsToPass(false)}} to='/signin' className={c.menu__link}>Войти</NavLink>
                 </li>
               </ul>
             </div>): ''}

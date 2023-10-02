@@ -5,15 +5,38 @@ export default function SignUp(props){
   const handleSubmit =(e)=>{
     e.preventDefault();
     if(props.user.password===props.user.password__double&&props.user.password!==''&& props.user.mail!==''){
-      props.setIsToPass(true)
+      return fetch("https://skypro-music-api.skyeng.tech/user/signup/", {
+        method: "POST",
+        body: JSON.stringify({
+          email: props.user.mail,
+          password: props.user.password,
+          username: props.user.mail,
+        }),
+        headers: {
+          "content-type": "application/json",
+        }})
+      .then((response) =>{ 
+        if(response.ok !== true){
+          throw new Error(response.statusText)
+        }
+        return response.json()})
+      .then((response)=>{
+        console.log(response);
+        props.setIsToPass(true);
+        navigate('/')})
+      .catch((error)=>{
+        props.setIsToPass(false);
+        props.setUser({...props.user,
+        password:'',
+        password__double:''});
+        alert(error)})
     }
     else{
       props.setIsToPass(false);
-    }
-    props.setUser({...props.user,
+      props.setUser({...props.user,
       password:'',
       password__double:''});
-    navigate('/');
+    }
   }
   return(
     <div className={c.wrapper}>

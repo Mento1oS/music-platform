@@ -1,7 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import c from './Sidebar.module.css';
-
-
 function Sidebar(props){
     return(
         <div className={`${c.main__sidebar} ${c.sidebar}`}>
