@@ -2,12 +2,12 @@ import c from './PlayListItem.module.css';
 export default function PlayList__item(props){
     return(
           <div className={c.playlist__item}>
-            <div className={`${c.playlist__track} ${c.track}`}>
-              <div className={`${c.track__title}`}>
-                <div onClick={()=>{
+            <div onClick={()=>{
                   props.setCurrentSong(()=>{
                         return props.song});
-                  props.setIsPlaying(true);}} className={c.track__title_image}>
+                  props.setIsPlaying(true);}} className={`${c.playlist__track} ${c.track}`}>
+              <div className={`${c.track__title}`}>
+                <div className={c.track__title_image}>
                   <svg className={c.track__title_svg} alt="music">
                     {props.isSkeleton?(<img src='/img/Group12.png'></img>):
                       (<use xlinkHref="img/icon/sprite.svg#icon-note"></use>)}

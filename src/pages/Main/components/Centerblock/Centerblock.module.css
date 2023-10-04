@@ -32,8 +32,9 @@
     -webkit-box-flex: 3;
     -ms-flex-positive: 3;
     flex-grow: 3;
-    padding: 20px 40px 20px 111px;
-  }.centerblock__search {
+    padding: 20px 40px 80px 111px;
+  }
+  .centerblock__search {
     width: 100%;
     border-bottom: 1px solid #4e4e4e;
     margin-bottom: 51px;
@@ -188,7 +189,6 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    overflow-y: auto;
   }
   
   .playlist_title__col {
