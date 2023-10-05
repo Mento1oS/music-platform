@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import c from './Nav.module.css';
-import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
-function Nav(){
+function Nav(props){
     const [isVisibleBurger, setIsVisibleBurger] = useState(true);
     return(
         <nav className={`${c.main__nav} ${c.nav}`}>
@@ -17,13 +17,18 @@ function Nav(){
             {isVisibleBurger ? (<div className={`${c.nav__menu} ${c.menu}`}>
               <ul className={c.menu__list}>
                 <li className={c.menu__item}>
-                  <a href="#" className={c.menu__link}>Главное</a>
+                  <NavLink to="/" className={c.menu__link}>Главное</NavLink>
                 </li>
                 <li className={c.menu__item}>
-                  <a href="#" className={c.menu__link}>Мой плейлист</a>
+                  <NavLink to="/myplaylist" className={c.menu__link}>Мой плейлист</NavLink>
                 </li>
                 <li className={c.menu__item}>
-                  <a href="../signin.html" className={c.menu__link}>Войти</a>
+                  <NavLink onClick={()=>{
+                    props.setUser({
+                      mail:'', 
+                      password:'', 
+                      password__double:''})
+                    props.setIsToPass(false)}} to='/signin' className={c.menu__link}>Войти</NavLink>
                 </li>
               </ul>
             </div>): ''}
