@@ -1,38 +1,40 @@
 import { useState } from 'react';
-import c from './Nav.module.css';
-import { NavLink } from 'react-router-dom';
-
+import { StyledMain__Nav_Nav, StyledBurger__Line, 
+  StyledLogo__Image, StyledMenu__Item,
+  StyledMenu__Link, StyledMenu__List, 
+  StyledNav__Burger_Burger, StyledNav__Logo_Logo, 
+  StyledNav__Menu_Menu} from './styles';
 function Nav(props){
     const [isVisibleBurger, setIsVisibleBurger] = useState(true);
     return(
-        <nav className={`${c.main__nav} ${c.nav}`}>
-            <div className={`${c.nav__logo} ${c.logo}`}>
-              <img className={c.logo__image} src="img/logo.png" alt="logo" />
-            </div>
-            <div onClick={()=>setIsVisibleBurger(!isVisibleBurger)} className={`${c.nav__burger} ${c.burger}`}>
-              <span className={c.burger__line}></span>
-              <span className={c.burger__line}></span>
-              <span className={c.burger__line}></span>
-            </div>
-            {isVisibleBurger ? (<div className={`${c.nav__menu} ${c.menu}`}>
-              <ul className={c.menu__list}>
-                <li className={c.menu__item}>
-                  <NavLink to="/" className={c.menu__link}>Главное</NavLink>
-                </li>
-                <li className={c.menu__item}>
-                  <NavLink to="/myplaylist" className={c.menu__link}>Мой плейлист</NavLink>
-                </li>
-                <li className={c.menu__item}>
-                  <NavLink onClick={()=>{
+        <StyledMain__Nav_Nav>
+            <StyledNav__Logo_Logo>
+              <StyledLogo__Image src="img/logo.png" alt="logo" />
+            </StyledNav__Logo_Logo>
+            <StyledNav__Burger_Burger onClick={()=>setIsVisibleBurger(!isVisibleBurger)}>
+              <StyledBurger__Line></StyledBurger__Line>
+              <StyledBurger__Line></StyledBurger__Line>
+              <StyledBurger__Line></StyledBurger__Line>
+            </StyledNav__Burger_Burger>
+            {isVisibleBurger ? (<StyledNav__Menu_Menu>
+              <StyledMenu__List>
+                <StyledMenu__Item>
+                  <StyledMenu__Link to="/">Главное</StyledMenu__Link>
+                </StyledMenu__Item>
+                <StyledMenu__Item>
+                  <StyledMenu__Link to="/myplaylist">Мой плейлист</StyledMenu__Link>
+                </StyledMenu__Item>
+                <StyledMenu__Item>
+                  <StyledMenu__Link onClick={()=>{
                     props.setUser({
                       mail:'', 
                       password:'', 
                       password__double:''})
-                    props.setIsToPass(false)}} to='/signin' className={c.menu__link}>Войти</NavLink>
-                </li>
-              </ul>
-            </div>): ''}
-          </nav>
+                    props.setIsToPass(false)}} to='/signin'>Войти</StyledMenu__Link>
+                </StyledMenu__Item>
+              </StyledMenu__List>
+            </StyledNav__Menu_Menu>): ''}
+          </StyledMain__Nav_Nav>
     );
 }
 export default Nav;

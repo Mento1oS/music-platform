@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useRef } from 'react';
-import c from './Index.module.css';
 import { useState } from 'react';
 import Bar from '../Bar/Bar';
 import Main from '../Main/Main';

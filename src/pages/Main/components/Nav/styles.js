@@ -1,51 +1,22 @@
-._btn {
-    cursor: pointer;
-  }
-
-  ._btn_text:hover {
-    border-color: #d9b6ff;
-    color: #d9b6ff;
-    cursor: pointer;
-  }
-  
-  ._btn_icon:hover svg {
-    fill: transparent;
-    stroke: #acacac;
-    cursor: pointer;
-  }
-  
-  ._btn_text:active {
-    border-color: #ad61ff;
-    color: #ad61ff;
-    cursor: pointer;
-  }
-  
-  ._btn_icon:active svg {
-    fill: transparent;
-    stroke: #ffffff;
-    cursor: pointer;
-  }
-  
-  ._btn_icon:active .track_play__like_svg,
-  ._btn_icon:active .track_play__dislike_svg {
-    fill: #696969;
-    stroke: #ffffff;
-    cursor: pointer;
-  }
-  .main__nav {
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+const StyledMain__Nav = styled.nav`
     width: 244px;
     background-color: #181818;
-    padding: 20px 0 20px 36px;
-  }
-  .nav__logo {
+    padding: 20px 0 20px 36px;     
+`;
+export const StyledMain__Nav_Nav = styled(StyledMain__Nav)`
+`;
+const StyledNav__Logo = styled.div`
     width: 113.33px;
     height: 43px;
     padding: 13px 0 13px 0;
     background-color: transparent;
     margin-bottom: 20px;
-  }
-  
-  .nav__burger {
+`;
+export const StyledNav__Logo_Logo = styled(StyledNav__Logo)`
+`;
+const StyledNav__Burger = styled.div`
     width: 20px;
     height: 36px;
     padding: 13px 0;
@@ -59,38 +30,36 @@
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-  }
-  
-  .nav__menu {
+`;
+export const StyledNav__Burger_Burger = styled(StyledNav__Burger)`
+`;
+const StyledNav__Menu = styled.div`
     display: block;
     visibility: visible;
-  }
-  
-  .logo__image {
+`;
+export const StyledNav__Menu_Menu = styled(StyledNav__Menu)`
+`;
+export const StyledLogo__Image = styled.img`
     width: 113.33px;
     height: 17px;
     color: #181818;
-  }
-  
-  .burger__line {
+`;
+export const StyledBurger__Line = styled.span`
     display: inline-block;
     width: 100%;
     height: 1px;
     background-color: #d3d3d3;
-  }
-  
-  .menu__list {
-    padding: 18px 0 10px 0;
-  }
-  
-  .menu__item {
+`;
+export const StyledMenu__List = styled.ul`
+    padding: 18px 0 10px 0;    
+`;
+export const StyledMenu__Item = styled.li`
     padding: 5px 0;
     margin-bottom: 16px;
-  }
-  
-  .menu__link {
+`;
+export const StyledMenu__Link = styled(NavLink)`
     color: #ffffff;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-  }
+`;

@@ -1,9 +1,8 @@
-import c from './MyPlaylist.module.css';
-
+import { StyledWrapper } from './styles';
 export default function MyPlaylist(){
     return(
-        <div className={c.wrapper}>
+        <StyledWrapper>
             My Playlist
-        </div>
+        </StyledWrapper>
     )
 }

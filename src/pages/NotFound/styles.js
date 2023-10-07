@@ -1,4 +1,5 @@
-.container{
+import styled from "styled-components";
+export const StyledContainer = styled.div`
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -6,15 +7,15 @@
     justify-content: center;
     align-items: center;
     background-color: white;
-}
-.error{
+`;
+export const StyledError = styled.div`
     margin-bottom: 100px;
     font-weight: 700;
     color: brown;
     font-size: 30px;
-}
-.text{
+`
+export const StyledText = styled.div`
     font-weight: 900;
     color: rgb(0, 0, 0);
     font-size: 26px;
-}
+`

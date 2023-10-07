@@ -2,6 +2,17 @@ import c from './Centerblock.module.css';
 import PlayList__item from '../PlayListItem/PlayListItem';
 import Dropout from '../Dropout/Dropout';
 import { useState } from 'react';
+import { StyledCenterblock__Content, StyledCenterblock__Filter,
+  StyledCenterblock__Search_Search, StyledCenterblock__h2, 
+  StyledContent__Playlist_Playlist, StyledContent__Title_Playlist_Title, 
+  StyledFilter__List__Wrapper_Author__List, StyledFilter__List__Wrapper_Genre__List, 
+  StyledFilter__List__Wrapper_Year__List, StyledFilter__Title,
+  StyledMain__Centerblock_CenterBlock, StyledPlaylist_Title__Col__Col01, 
+  StyledPlaylist_Title__Col__Col02, StyledPlaylist_Title__Col__Col03, 
+  StyledPlaylist_Title__Col__Col04, StyledPlaylist_Title__Svg, 
+  StyledSearch__Svg, StyledSearch__Text, 
+  Styled_Btn_Text_Filter_Button_Author, Styled_Btn_Text_Filter_Button_Genre, 
+  Styled_Btn_Text_Filter_Button_Year } from './styles';
 function Centerblock(props){
     const [dropoutStatus, setDropoutStatus] = useState([false, false, false]);
     const singers=['messi', 'Noize MC', 'RHCP', 'Pyrokinesis', 'Joy Division', 'Lol', 'mocker'];
@@ -26,43 +37,42 @@ function Centerblock(props){
       
     }
     return(
-        <div className={`${c.main__centerblock} ${c.centerblock}`}>
-            <div className={`${c.centerblock__search} ${c.search}`}>
-              <svg className={c.search__svg}>
+        <StyledMain__Centerblock_CenterBlock>
+            <StyledCenterblock__Search_Search>
+              <StyledSearch__Svg>
                 <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
-              </svg>
-              <input
-                className={c.search__text}
+              </StyledSearch__Svg>
+              <StyledSearch__Text
                 type="search"
                 placeholder="Поиск"
                 name="search"
               />
-            </div>
-            <h2 className={c.centerblock__h2}>Треки</h2>
-            <div className={`${c.centerblock__filter} ${c.filter}`}>
-              <div className={c.filter__title}>Искать по:</div>
-              <div onClick={switchHandle} className={`${c.filter__button} ${c.button_author} ${c._btn_text} ${dropoutStatus[0]&& c.active}`}>
+            </StyledCenterblock__Search_Search>
+            <StyledCenterblock__h2>Треки</StyledCenterblock__h2>
+            <StyledCenterblock__Filter>
+              <StyledFilter__Title>Искать по:</StyledFilter__Title>
+              <Styled_Btn_Text_Filter_Button_Author dropoutStatus={dropoutStatus[0]} onClick={switchHandle}>
                 исполнителю
-                {dropoutStatus[0]&&<div className={`${c.filter__list__wrapper} ${c.author__list}`}><Dropout data={singers}/></div>}
-              </div>
-              <div onClick={switchHandle} className={`${c.filter__button} ${c.button_year} ${c._btn_text} ${dropoutStatus[1]&& c.active}`}>
-                году выпуска {dropoutStatus[1] && <div className={`${c.filter__list__wrapper} ${c.year__list}`}><Dropout data={years}/></div>}
-              </div>
-              <div onClick={switchHandle} className={`${c.filter__button} ${c.button_genre} ${c._btn_text} ${dropoutStatus[2]&& c.active}`}>
-                жанру{dropoutStatus[2] && <div className={`${c.filter__list__wrapper} ${c.genre__list}`}><Dropout data={genres}/></div>}</div>
-            </div>
-            <div className={c.centerblock__content}>
-              <div className={`${c.content__title} ${c.playlist_title}`}>
-                <div className={`${c.playlist_title__col} ${c.col01}`}>Трек</div>
-                <div className={`${c.playlist_title__col} ${c.col02}`}>ИСПОЛНИТЕЛЬ</div>
-                <div className={`${c.playlist_title__col} ${c.col03}`}>АЛЬБОМ</div>
-                <div className={`${c.playlist_title__col} ${c.col04}`}>
-                  <svg className={c.playlist_title__svg} alt="time">
+                {dropoutStatus[0]&&<StyledFilter__List__Wrapper_Author__List><Dropout data={singers}/></StyledFilter__List__Wrapper_Author__List>}
+              </Styled_Btn_Text_Filter_Button_Author>
+              <Styled_Btn_Text_Filter_Button_Year dropoutStatus={dropoutStatus[1]} onClick={switchHandle}>
+                году выпуска {dropoutStatus[1] && <StyledFilter__List__Wrapper_Year__List><Dropout data={years}/></StyledFilter__List__Wrapper_Year__List>}
+              </Styled_Btn_Text_Filter_Button_Year>
+              <Styled_Btn_Text_Filter_Button_Genre dropoutStatus={dropoutStatus[2]} onClick={switchHandle}>
+                жанру{dropoutStatus[2] && <StyledFilter__List__Wrapper_Genre__List><Dropout data={genres}/></StyledFilter__List__Wrapper_Genre__List>}</Styled_Btn_Text_Filter_Button_Genre>
+            </StyledCenterblock__Filter>
+            <StyledCenterblock__Content>
+              <StyledContent__Title_Playlist_Title>
+                <StyledPlaylist_Title__Col__Col01>Трек</StyledPlaylist_Title__Col__Col01>
+                <StyledPlaylist_Title__Col__Col02>ИСПОЛНИТЕЛЬ</StyledPlaylist_Title__Col__Col02>
+                <StyledPlaylist_Title__Col__Col03>АЛЬБОМ</StyledPlaylist_Title__Col__Col03>
+                <StyledPlaylist_Title__Col__Col04>
+                  <StyledPlaylist_Title__Svg alt="time">
                     <use xlinkHref="img/icon/sprite.svg#icon-watch"></use>
-                  </svg>
-                </div>
-              </div>
-              <div className={`${c.content__playlist} ${c.playlist}`}>
+                  </StyledPlaylist_Title__Svg>
+                </StyledPlaylist_Title__Col__Col04>
+              </StyledContent__Title_Playlist_Title>
+              <StyledContent__Playlist_Playlist>
                 {props.isSkeleton?
                 <><PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
                 <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
@@ -79,9 +89,9 @@ function Centerblock(props){
                 <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/></>
                 :props.tracks.map((elem=><PlayList__item key={elem.id} isPlaying={props.isPlaying} setIsPlaying={props.setIsPlaying} setCurrentSong={props.setCurrentSong} currentSong={props.currentSong} isSkeleton={props.isSkeleton} song={elem}/>))
                 }
-              </div>
-            </div>
-          </div>
+              </StyledContent__Playlist_Playlist>
+            </StyledCenterblock__Content>
+          </StyledMain__Centerblock_CenterBlock>
     )
 }
 export default Centerblock;
