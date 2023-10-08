@@ -18,7 +18,7 @@ export const StyledDropout__Wrapper = styled.div`
     overflow-y: scroll;
 `;
 export const StyledDropout__Elements = styled.ul`
-    color: white;
+    color: ${({theme})=>theme.main_fonts};
     display: flex;
     flex-direction: column;
     gap: 8px;

@@ -11,6 +11,7 @@ import { StyledBar, StyledBar__Content, StyledBar__Player_Block,
   StyledTrack_Play__Contain, StyledTrue__Player, StyledVolume__Content, 
   StyledVolume__Image, StyledVolume__Progress, StyledVolume__Progress_Line, StyledVolume__Svg, Styled__Btn_Next_Svg,
   Styled__Btn_Play_Svg, Styled__Btn_Prev_Svg, Styled__Btn_Repeat_Svg, Styled__Btn_Shuffle_Svg } from "./styles";
+import { useThemeContext } from "../../../../providers/ThemeProvider";
 function Bar(props){
   
   const audioRef = useRef(null);
@@ -52,13 +53,14 @@ function Bar(props){
   const mock =()=>{
     alert('Функционал ещё не готов');
   }
+  const {theme} = useThemeContext();
     return (
       <Fragment>
         <StyledTrue__Player autoPlay={props.isPlaying} src={props.currentSong.track_file} onTimeUpdate={runUp} muted={props.isMuted?true:false} ref={audioRef} >
         </StyledTrue__Player>
         <StyledBar>
           <StyledTimer>{Math.floor(props.currentTime/60)}:{Math.floor(props.currentTime)%60>9?Math.floor(props.currentTime%60):'0'+Math.floor(props.currentTime%60)}/{Math.floor(props.currentDuration/60)}:{props.currentDuration%60>9?Math.floor(props.currentDuration%60):'0'+Math.floor(props.currentDuration%60)}</StyledTimer>
-          <StyledBar__Content>
+          <StyledBar__Content theme={theme}>
             <ProgressBar rewind={rewind} duration={props.currentDuration} currentTime={props.currentTime} player={audioRef}></ProgressBar>
             <StyledBar__Player_Block>
               <StyledBar__Player_Player>
@@ -103,10 +105,10 @@ function Bar(props){
                       </StyledTrack_Play__Svg>
                     </StyledTrack_Play__Image>
                     <StyledTrack_Play__Author>
-                      <StyledTrack_Play__Author_Link href="http://">{props.currentSong.name}</StyledTrack_Play__Author_Link>
+                      <StyledTrack_Play__Author_Link theme={theme} href="http://">{props.currentSong.name}</StyledTrack_Play__Author_Link>
                     </StyledTrack_Play__Author>
                     <StyledTrack_Play__Album>
-                      <StyledTrack_Play__Album_Link href="http://">{props.currentSong.author}</StyledTrack_Play__Album_Link>
+                      <StyledTrack_Play__Album_Link theme={theme} href="http://">{props.currentSong.author}</StyledTrack_Play__Album_Link>
                     </StyledTrack_Play__Album>
                   </StyledTrack_Play__Contain>
 

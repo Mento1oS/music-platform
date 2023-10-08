@@ -65,14 +65,14 @@ export const StyledTrack__Title_Link = styled.a`
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    color: white;
+    color: ${({theme}) => theme.main_fonts};
 `;
 export const StyledTrack__Title_Span = styled.span`
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    color: #4e4e4e;
+    color: ${({theme}) => theme.sec_fonts};
 `;
 export const StyledTrack__Author = styled.div`
     width: 321px;
@@ -88,7 +88,7 @@ export const StyledTrack__Author_Link = styled.a`
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    color: #ffffff;
+    color: ${({theme}) => theme.main_fonts};
     text-align: left;
 `;
 export const StyledTrack__Album = styled.div`

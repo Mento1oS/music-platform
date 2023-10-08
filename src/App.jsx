@@ -41,7 +41,7 @@ function App() {
       <div className="App">
         <Wrapper theme={currentTheme}>
           <Container theme={currentTheme}>
-            <GlobalStyle/>
+            <GlobalStyle theme={currentTheme}/>
             <AppRoutes currentDuration={currentDuration} setCurrentDuration={setCurrentDuration} currentTime={currentTime} setCurrentTime={setCurrentTime} isPlaying={isPlaying} setIsPlaying={setIsPlaying} isLoop={isLoop} setIsLoop={setIsLoop}
               isShuffle={isShuffle} setIsShuffle={setIsShuffle} isMuted={isMuted} setIsMuted={setIsMuted} tracks={tracks} setTracks={setTracks} currentSong={currentSong} setCurrentSong={setCurrentSong} user={user} accessToken={accessToken} refreshToken={refreshToken} setAccessToken={setAccessToken} setRefreshToken={setRefreshToken} isToPass={isToPass} setIsToPass={setIsToPass} setUser={setUser}/>
             <footer className="footer"></footer>

@@ -29,7 +29,6 @@ export const StyledSearch__Svg = styled.svg`
     width: 17px;
     height: 17px;
     margin-right: 5px;
-    stroke: #ffffff;
     fill: transparent;
 `;
 export const StyledSearch__Text = styled.input`
@@ -43,10 +42,10 @@ export const StyledSearch__Text = styled.input`
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    color: #ffffff;
+    color: ${({theme})=>theme.main_fonts};
     &::-webkit-input-placeholder {
         background-color: transparent;
-        color: #ffffff;
+        color: ${({theme})=>theme.main_fonts};
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -54,7 +53,7 @@ export const StyledSearch__Text = styled.input`
       }
     &:-ms-input-placeholder {
         background-color: transparent;
-        color: #ffffff;
+        color: ${({theme})=>theme.main_fonts};
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -62,7 +61,7 @@ export const StyledSearch__Text = styled.input`
       }
     &::-ms-input-placeholder {
         background-color: transparent;
-        color: #ffffff;
+        color: ${({theme})=>theme.main_fonts};
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -70,7 +69,7 @@ export const StyledSearch__Text = styled.input`
       }
     &::placeholder {
         background-color: transparent;
-        color: #ffffff;
+        color: ${({theme})=>theme.main_fonts};
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -90,7 +89,7 @@ const Styled_Btn_Text_Filter_Button= styled(Styled_Btn_Text)`
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    border: 1px solid #ffffff;
+    border: 1px solid ${({theme})=>theme.main_fonts};
     border-radius: 60px;
     padding: 6px 20px;  
     &:not(:last-child) {
@@ -219,7 +218,7 @@ export const StyledPlaylist_Title__Svg = styled.svg`
 
 const StyledFilter__List__Wrapper = styled.div`
     position: absolute;
-    background-color: #313131;
+    background-color: ${({theme})=>theme.dpt_bg};
     min-width: 180px;
     height: 237px;
     top: 45px;

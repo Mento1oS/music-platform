@@ -1,11 +1,9 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-const StyledMain__Nav = styled.nav`
+export const StyledMain__Nav_Nav = styled.nav`
     width: 244px;
-    background-color: #181818;
+    background-color: ${({theme})=> theme.sec_bg};
     padding: 20px 0 20px 36px;     
-`;
-export const StyledMain__Nav_Nav = styled(StyledMain__Nav)`
 `;
 const StyledNav__Logo = styled.div`
     width: 113.33px;
@@ -48,7 +46,7 @@ export const StyledBurger__Line = styled.span`
     display: inline-block;
     width: 100%;
     height: 1px;
-    background-color: #d3d3d3;
+    background-color: ${({theme})=> theme.main_fonts};
 `;
 export const StyledMenu__List = styled.ul`
     padding: 18px 0 10px 0;    
@@ -58,7 +56,7 @@ export const StyledMenu__Item = styled.li`
     margin-bottom: 16px;
 `;
 export const StyledMenu__Link = styled(NavLink)`
-    color: #ffffff;
+    color: ${({theme})=> theme.main_fonts};
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;

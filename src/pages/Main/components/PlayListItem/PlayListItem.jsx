@@ -1,3 +1,4 @@
+import { useThemeContext } from "../../../../providers/ThemeProvider";
 import { StyledColumn1, StyledColumn2, 
   StyledColumn3, StyledPlaylist__Item, 
   StyledPlaylist__Track_Track, StyledTrack__Album,
@@ -8,6 +9,7 @@ import { StyledColumn1, StyledColumn2,
   StyledTrack__Title_Span, StyledTrack__Title_Svg } from "./styles";
 
 export default function PlayList__item(props){
+  const {theme} = useThemeContext();
     return(
           <StyledPlaylist__Item>
             <StyledPlaylist__Track_Track onClick={()=>{
@@ -23,16 +25,16 @@ export default function PlayList__item(props){
                 </StyledTrack__Title_Image>
                   {props.isSkeleton ? <StyledColumn1></StyledColumn1>
                     :<div className='track__title_text'>
-                      <StyledTrack__Title_Link href="http://">
+                      <StyledTrack__Title_Link theme={theme} href="http://">
                         {props.song.name}
-                        <StyledTrack__Title_Span>
+                        <StyledTrack__Title_Span theme={theme}>
                           {props.span? props.span: ''}
                         </StyledTrack__Title_Span>
                       </StyledTrack__Title_Link></div>}
               </StyledTrack__Title>
               <StyledTrack__Author>
                 {props.isSkeleton? <StyledColumn2></StyledColumn2>
-                  :<StyledTrack__Author_Link href="http://">{props.song.author}</StyledTrack__Author_Link>}
+                  :<StyledTrack__Author_Link theme={theme} href="http://">{props.song.author}</StyledTrack__Author_Link>}
               </StyledTrack__Author>
               {props.isSkeleton? <StyledColumn3></StyledColumn3>
                 :<><StyledTrack__Album>

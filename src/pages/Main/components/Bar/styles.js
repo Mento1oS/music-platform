@@ -127,7 +127,7 @@ export const StyledBar__Content = styled.div`
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    background: rgba(28, 28, 28, 0.5);
+    background: ${({theme})=>theme.bar_bg};
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -292,7 +292,7 @@ export const StyledTrack_Play__Author_Link = styled.a`
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #ffffff;
+  color: ${({theme})=>theme.main_fonts};
   white-space: nowrap;
 `;
 export const StyledTrack_Play__Album = styled.div`
@@ -306,7 +306,7 @@ export const StyledTrack_Play__Album_Link = styled.a`
   font-weight: 400;
   font-size: 13px;
   line-height: 24px;
-  color: #ffffff;
+  color: ${({theme})=>theme.main_fonts};
 `;
 export const StyledTrack_Play__Like_Dis = styled.div`
   display: -webkit-box;

@@ -6,7 +6,7 @@ export const StyledContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: ${({theme})=>theme.main_bg};
 `;
 export const StyledError = styled.div`
     margin-bottom: 100px;
@@ -16,6 +16,6 @@ export const StyledError = styled.div`
 `
 export const StyledText = styled.div`
     font-weight: 900;
-    color: rgb(0, 0, 0);
+    color: ${({theme})=>theme.main_fonts};
     font-size: 26px;
 `
