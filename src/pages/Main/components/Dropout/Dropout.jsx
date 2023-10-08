@@ -1,4 +1,3 @@
-import c from './Dropout.module.css';
 import { StyledDropout__Wrapper, StyledDropout__Elem, StyledDropout__Elements } from './styles';
 export default function Dropout(props){
     let nextId=0;

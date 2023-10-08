@@ -5,7 +5,8 @@ import { StyledColumn1, StyledColumn2,
   StyledTrack__Author_Link, StyledTrack__Time_Svg, 
   StyledTrack__Time_Text, StyledTrack__Title, 
   StyledTrack__Title_Image, StyledTrack__Title_Link, 
-  StyledTrack__Title_Span, StyledTrack__Title_Svg, Sty } from "./styles";
+  StyledTrack__Title_Span, StyledTrack__Title_Svg } from "./styles";
+
 export default function PlayList__item(props){
     return(
           <StyledPlaylist__Item>

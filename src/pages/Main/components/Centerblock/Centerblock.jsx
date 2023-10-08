@@ -1,4 +1,3 @@
-import c from './Centerblock.module.css';
 import PlayList__item from '../PlayListItem/PlayListItem';
 import Dropout from '../Dropout/Dropout';
 import { useState } from 'react';
@@ -51,14 +50,14 @@ function Centerblock(props){
             <StyledCenterblock__h2>Треки</StyledCenterblock__h2>
             <StyledCenterblock__Filter>
               <StyledFilter__Title>Искать по:</StyledFilter__Title>
-              <Styled_Btn_Text_Filter_Button_Author dropoutStatus={dropoutStatus[0]} onClick={switchHandle}>
+              <Styled_Btn_Text_Filter_Button_Author dropout={dropoutStatus[0].toString()} onClick={switchHandle}>
                 исполнителю
                 {dropoutStatus[0]&&<StyledFilter__List__Wrapper_Author__List><Dropout data={singers}/></StyledFilter__List__Wrapper_Author__List>}
               </Styled_Btn_Text_Filter_Button_Author>
-              <Styled_Btn_Text_Filter_Button_Year dropoutStatus={dropoutStatus[1]} onClick={switchHandle}>
+              <Styled_Btn_Text_Filter_Button_Year dropout={dropoutStatus[1].toString()} onClick={switchHandle}>
                 году выпуска {dropoutStatus[1] && <StyledFilter__List__Wrapper_Year__List><Dropout data={years}/></StyledFilter__List__Wrapper_Year__List>}
               </Styled_Btn_Text_Filter_Button_Year>
-              <Styled_Btn_Text_Filter_Button_Genre dropoutStatus={dropoutStatus[2]} onClick={switchHandle}>
+              <Styled_Btn_Text_Filter_Button_Genre dropout={dropoutStatus[2].toString()} onClick={switchHandle}>
                 жанру{dropoutStatus[2] && <StyledFilter__List__Wrapper_Genre__List><Dropout data={genres}/></StyledFilter__List__Wrapper_Genre__List>}</Styled_Btn_Text_Filter_Button_Genre>
             </StyledCenterblock__Filter>
             <StyledCenterblock__Content>

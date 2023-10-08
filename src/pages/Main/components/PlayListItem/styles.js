@@ -65,7 +65,7 @@ export const StyledTrack__Title_Link = styled.a`
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    color: #ffffff;
+    color: white;
 `;
 export const StyledTrack__Title_Span = styled.span`
     font-style: normal;

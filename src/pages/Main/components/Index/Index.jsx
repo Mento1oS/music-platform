@@ -61,8 +61,8 @@ export default function Index(props){
   return(
       <Fragment>
           <Main currentDuration={props.currentDuration} setCurrentDuration={props.setCurrentDuration} isPlaying={props.isPlaying} setIsPlaying={props.setIsPlaying} tracks={props.tracks} currentSong={props.currentSong} setCurrentSong={props.setCurrentSong} isSkeleton={isSkeleton} user={props.user} setUser={props.setUser} isToPass={props.isToPass} setIsToPass={props.setIsToPass}/>
-          <Bar currentDuration={props.currentDuration} setCurrentDuration={props.setCurrentDuration} currentTime={props.currentTime} setCurrentTime={props.setCurrentTime} isPlaying={props.isPlaying} setIsPlaying={props.setIsPlaying} isLoop={props.isLoop} setIsLoop={props.setIsLoop}
-        isShuffle={props.isShuffle} setIsShuffle={props.setIsShuffle} isMuted={props.isMuted} setIsMuted={props.setIsMuted} currentSong={props.currentSong} setCurrentSong={props.setCurrentSong}/>
+          {props.currentSong.track_file?<Bar currentDuration={props.currentDuration} setCurrentDuration={props.setCurrentDuration} currentTime={props.currentTime} setCurrentTime={props.setCurrentTime} isPlaying={props.isPlaying} setIsPlaying={props.setIsPlaying} isLoop={props.isLoop} setIsLoop={props.setIsLoop}
+        isShuffle={props.isShuffle} setIsShuffle={props.setIsShuffle} isMuted={props.isMuted} setIsMuted={props.setIsMuted} currentSong={props.currentSong} setCurrentSong={props.setCurrentSong}/>:''}
       </Fragment>
   )
 }

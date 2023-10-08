@@ -96,8 +96,8 @@ const Styled_Btn_Text_Filter_Button= styled(Styled_Btn_Text)`
     &:not(:last-child) {
         margin-right: 10px;
       }
-    ${({dropoutStatus})=>{
-        if(dropoutStatus){ 
+    ${({dropout})=>{
+        if(dropout==='true'){ 
             return(`
                 color: #ad61ff;
                 border-color: #ad61ff;

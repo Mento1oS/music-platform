@@ -4,8 +4,10 @@ import { StyledMain__Nav_Nav, StyledBurger__Line,
   StyledMenu__Link, StyledMenu__List, 
   StyledNav__Burger_Burger, StyledNav__Logo_Logo, 
   StyledNav__Menu_Menu} from './styles';
+import { useThemeContext } from '../../../../providers/ThemeProvider';
 function Nav(props){
     const [isVisibleBurger, setIsVisibleBurger] = useState(true);
+    const {toggleTheme} =useThemeContext();
     return(
         <StyledMain__Nav_Nav>
             <StyledNav__Logo_Logo>
@@ -32,6 +34,7 @@ function Nav(props){
                       password__double:''})
                     props.setIsToPass(false)}} to='/signin'>Войти</StyledMenu__Link>
                 </StyledMenu__Item>
+                <StyledMenu__Item onClick={toggleTheme}>Поменять тему</StyledMenu__Item>
               </StyledMenu__List>
             </StyledNav__Menu_Menu>): ''}
           </StyledMain__Nav_Nav>
