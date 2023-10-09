@@ -1,5 +1,9 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import c from './SignUp.module.css';
+import { StyledWrapper, StyledContainer__Signup, 
+ StyledModal__Block, StyledModal__Form__Login,
+ StyledModal__Input_Login, StyledModal__Input_PassD, 
+ StyledModal__Input_PassF, StyledModal__Logo,
+ StyledModal__Signup__Ent} from './styles';
 export default function SignUp(props){
   const navigate = useNavigate();
   const handleSubmit =(e)=>{
@@ -39,17 +43,16 @@ export default function SignUp(props){
     }
   }
   return(
-    <div className={c.wrapper}>
-      <div className={c.container__signup}>
-        <div className={c.modal__block}>
-          <form onSubmit={handleSubmit} className={c.modal__form__login}>
+    <StyledWrapper>
+      <StyledContainer__Signup>
+        <StyledModal__Block>
+          <StyledModal__Form__Login onSubmit={handleSubmit}>
             <NavLink to="/">
-              <div className={c.modal__logo}>
+              <StyledModal__Logo>
                 <img src="../img/logo_modal.png" alt="logo" />
-              </div>
+              </StyledModal__Logo>
             </NavLink>
-            <input 
-              className={`${c.modal__input} ${c.login}`}
+            <StyledModal__Input_Login
               onChange={(e)=>{props.setUser({...props.user,
                 mail: e.target.value})}}
               type="text"
@@ -57,8 +60,7 @@ export default function SignUp(props){
               placeholder="Почта"
               value={props.user.mail}
             />
-            <input
-              className={`${c.modal__input} ${c.password__first}`}
+            <StyledModal__Input_PassF
               onChange={(e)=>{
                 props.setUser({...props.user,
                 password: e.target.value});
@@ -68,8 +70,7 @@ export default function SignUp(props){
               placeholder="Пароль"
               value={props.user.password}
             />
-            <input
-              className={`${c.modal__input} ${c.password__double}`}
+            <StyledModal__Input_PassD
               onChange={(e)=>{
                 props.setUser({...props.user,
                 password__double: e.target.value});
@@ -79,12 +80,12 @@ export default function SignUp(props){
               placeholder="Повторите пароль"
               value={props.user.password__double}
             />
-            <button className={c.modal__btn__signup__ent}>
+            <StyledModal__Signup__Ent>
               Зарегистрироваться
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+            </StyledModal__Signup__Ent>
+          </StyledModal__Form__Login>
+        </StyledModal__Block>
+      </StyledContainer__Signup>
+    </StyledWrapper>
     )
 }

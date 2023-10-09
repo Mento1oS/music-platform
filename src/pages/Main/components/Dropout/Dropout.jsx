@@ -1,11 +1,13 @@
-import c from './Dropout.module.css'
+import { useThemeContext } from '../../../../providers/ThemeProvider';
+import { StyledDropout__Wrapper, StyledDropout__Elem, StyledDropout__Elements } from './styles';
 export default function Dropout(props){
     let nextId=0;
+    const {theme} = useThemeContext();
     return(
-        <div className={c.dropout__wrapper}>
-            <ul className={c.dropout__elements}>
-                {props.data.map(element => (<li key={nextId++} className={c.dropout__elem}>{element}</li>)) }
-            </ul>
-        </div>
+        <StyledDropout__Wrapper>
+            <StyledDropout__Elements theme={theme}>
+                {props.data.map(element => (<StyledDropout__Elem key={nextId++}>{element}</StyledDropout__Elem>)) }
+            </StyledDropout__Elements>
+        </StyledDropout__Wrapper>
     )
 }

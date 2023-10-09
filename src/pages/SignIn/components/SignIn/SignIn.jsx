@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import c from './SignIn.module.css';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { StyledWrapper, StyledContainer__Enter, 
+  StyledModal__Form__Login, StyledModal__Block, 
+  StyledModal__Logo, StyledModal__Btn__Enter, 
+  StyledModal__Btn__Signup, StyledNavLink,
+  StyledModal__Input_Login, StyledModal__Input_Password} from './styles';
 export default function SignIn(props){
   const [signIn, setSignIn] = useState({
     mail:'',
@@ -40,44 +44,42 @@ export default function SignIn(props){
       }
   }
   return(
-    <div className={c.wrapper}>
-      <div className={c.container__enter}>
-        <div className={c.modal__block}>
-          <form onSubmit={handleSubmit} className={c.modal__form__login} action="#">
+    <StyledWrapper>
+      <StyledContainer__Enter>
+        <StyledModal__Block>
+          <StyledModal__Form__Login onSubmit={handleSubmit} action="#">
             <NavLink to="/">
-              <div className={c.modal__logo}>
+              <StyledModal__Logo>
                 <img src="../img/logo_modal.png" alt="logo" />
-              </div>
+              </StyledModal__Logo>
             </NavLink>
-            <input onChange={(e)=>{setSignIn({
+            <StyledModal__Input_Login onChange={(e)=>{setSignIn({
               ...signIn,
               mail: e.target.value});
             }}
-              className={`${c.modal__input} ${c.login}`}
               type="text"
               name="login"
               placeholder="Почта"
               value={signIn.mail}
             />
-            <input onChange={(e)=>{setSignIn({
+            <StyledModal__Input_Password onChange={(e)=>{setSignIn({
               ...signIn,
               password: e.target.value});
             }}
-              className={`${c.modal__input} ${c.password}`}
               type="password"
               name="password"
               placeholder="Пароль"
               value={signIn.password}
             />
-            <button className={c.modal__btn__enter}>
+            <StyledModal__Btn__Enter>
                 Войти
-            </button>
-            <button className={c.modal__btn__signup}>
-              <NavLink className={c.signup__link} to="/signup">Зарегистрироваться</NavLink>
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+            </StyledModal__Btn__Enter>
+            <StyledModal__Btn__Signup>
+              <StyledNavLink to="/signup">Зарегистрироваться</StyledNavLink>
+            </StyledModal__Btn__Signup>
+          </StyledModal__Form__Login>
+        </StyledModal__Block>
+      </StyledContainer__Enter>
+    </StyledWrapper>
   )
 }

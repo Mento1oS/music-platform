@@ -61,7 +61,7 @@ export default function ProgressBar(props) {
     <StyledProgressInput
       type="range"
       min={0}
-      max={props.duration}
+      max={props.duration?props.duration:0}
       value={props.currentTime}
       step={0.01}
       onChange={props.rewind}

@@ -1,55 +1,64 @@
 import { NavLink } from 'react-router-dom';
-import c from './Sidebar.module.css';
+import { StyledMain__Sidebar, StyledSidebar__Icon,
+  StyledSidebar__Img, StyledSidebar__Item,
+  StyledSidebar__Link, StyledSidebar__List, 
+  StyledSidebar__Personal, StyledSidebar__Personal_Name,
+  StyledSkeleton, StyledStyled__Block } from './styles';
+import { useThemeContext } from '../../../../providers/ThemeProvider';
 function Sidebar(props){
+  const {theme} = useThemeContext();
     return(
-        <div className={`${c.main__sidebar} ${c.sidebar}`}>
-            <div className={c.sidebar__personal}>
-              <p className={c.sidebar__personal_name}>{props.user.mail}</p>
-              <div className={c.sidebar__icon}>
+        <StyledMain__Sidebar>
+            <StyledSidebar__Personal>
+              <StyledSidebar__Personal_Name theme={theme}>{props.user.mail}</StyledSidebar__Personal_Name>
+              <StyledSidebar__Icon theme={theme}>
                 <NavLink onClick={()=>{
                   props.setUser({
                     mail: '',
                     password: '',
                     password__double: ''});
                   props.setIsToPass(false);}} to='./signin'>
-                <svg alt="logout">
-                  <use xlinkHref="img/icon/sprite.svg#logout"></use>
-                </svg>
+                {theme.name==='dark'?
+                  <svg alt="logout">
+                    <use xlinkHref="img/icon/sprite.svg#logout"></use>
+                  </svg>:
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25.6711 16.046V14.7419C25.6711 13.2276 24.4435 12 22.9292 12H16.7419C15.2276 12 14 13.2276 14 14.7419V26.0645C14 27.5788 15.2276 28.8065 16.7419 28.8065H22.9292C24.4435 28.8065 25.6711 27.5788 25.6711 26.0645V24.6048M18.3572 20.3254H33.2963M33.2963 20.3254L30.1062 23.5155M33.2963 20.3254L30.1062 17.1353" stroke="black" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="20" cy="20" r="19.5" stroke="black"/>
+                  </svg>
+                  }
                 </NavLink>
-              </div>
-            </div>
-            <div className={c.sidebar__block}>
-              <div className={c.sidebar__list}>
-                <div className={c.sidebar__item}>
-                  <NavLink className={c.sidebar__link} to='compilation/1'>
-                    {props.isSkeleton?<div className={c.skeleton}></div>:<img
-                      className={c.sidebar__img}
+              </StyledSidebar__Icon>
+            </StyledSidebar__Personal>
+            <StyledStyled__Block>
+              <StyledSidebar__List>
+                <StyledSidebar__Item>
+                  <StyledSidebar__Link to='compilation/1'>
+                    {props.isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
                       src="img/playlist01.png"
                       alt="day's playlist"
                     />}
-                  </NavLink>
-                </div>
-                <div className={c.sidebar__item}>
-                  <NavLink className={c.sidebar__link} to='/compilation/2'>
-                    {props.isSkeleton?<div className={c.skeleton}></div>:<img
-                      className={c.sidebar__img}
+                  </StyledSidebar__Link>
+                </StyledSidebar__Item>
+                <StyledSidebar__Item>
+                  <StyledSidebar__Link to='/compilation/2'>
+                    {props.isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
                       src="img/playlist02.png"
                       alt="day's playlist"
                     />}
-                  </NavLink>
-                </div>
-                <div className={c.sidebar__item}>
-                  <NavLink className={c.sidebar__link} to='compilation/3'>
-                    {props.isSkeleton?<div className={c.skeleton}></div>:<img
-                      className={c.sidebar__img}
+                  </StyledSidebar__Link>
+                </StyledSidebar__Item>
+                <StyledSidebar__Item>
+                  <StyledSidebar__Link to='compilation/3'>
+                    {props.isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
                       src="img/playlist03.png"
                       alt="day's playlist"
                     />}
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-          </div>
+                  </StyledSidebar__Link>
+                </StyledSidebar__Item>
+              </StyledSidebar__List>
+            </StyledStyled__Block>
+          </StyledMain__Sidebar>
     );
 }
 export default Sidebar;

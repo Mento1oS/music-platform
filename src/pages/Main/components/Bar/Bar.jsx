@@ -1,6 +1,17 @@
 import { Fragment, useEffect, useRef} from "react";
-import c from "./Bar.module.css";
 import ProgressBar from "../ProgressBar/ProgressBar";
+import { StyledBar, StyledBar__Content, StyledBar__Player_Block,
+  StyledBar__Player_Player, StyledBar__Volume_Block_Volume, StyledPlayer__Btn_Next_Button__Icon,
+  StyledPlayer__Btn_Play, StyledPlayer__Btn_Prev_Button__Icon, StyledPlayer__Btn_Repeat_Button__Icon, 
+  StyledPlayer__Btn_Shuffle_Button__Icon, StyledPlayer__Controls, StyledPlayer__Track_Play_Track__Play, 
+  StyledTimer, StyledTrack_Play__Album, StyledTrack_Play__Album_Link, 
+  StyledTrack_Play__Author, StyledTrack_Play__Author_Link, StyledTrack_Play__Dislike, 
+  StyledTrack_Play__Dislike_Svg, StyledTrack_Play__Image, StyledTrack_Play__Like, 
+  StyledTrack_Play__Like_Svg, StyledTrack_Play__Svg, StyledTrack_Play__Like_Dis, 
+  StyledTrack_Play__Contain, StyledTrue__Player, StyledVolume__Content, 
+  StyledVolume__Image, StyledVolume__Progress, StyledVolume__Progress_Line, StyledVolume__Svg, Styled__Btn_Next_Svg,
+  Styled__Btn_Play_Svg, Styled__Btn_Prev_Svg, Styled__Btn_Repeat_Svg, Styled__Btn_Shuffle_Svg } from "./styles";
+import { useThemeContext } from "../../../../providers/ThemeProvider";
 function Bar(props){
   
   const audioRef = useRef(null);
@@ -24,6 +35,7 @@ function Bar(props){
   const toggleLoop=()=>{
     props.setIsLoop(!props.isLoop);
     props.isLoop ? audioRef.current.removeAttribute('loop'): audioRef.current.setAttribute('loop',true);
+    console.log(!props.isLoop+'Это пизда,блять');
   }
 
   const handleStart = () => {
@@ -41,99 +53,99 @@ function Bar(props){
   const mock =()=>{
     alert('Функционал ещё не готов');
   }
+  const {theme} = useThemeContext();
     return (
       <Fragment>
-        <audio autoPlay={props.isPlaying} src={props.currentSong.track_file} onTimeUpdate={runUp} muted={props.isMuted?true:false} className={c.true__player} ref={audioRef} >
-        </audio>
-        <div className={c.bar}>
-          <div className={c.timer}>{Math.floor(props.currentTime/60)}:{Math.floor(props.currentTime)%60>9?Math.floor(props.currentTime%60):'0'+Math.floor(props.currentTime%60)}/{Math.floor(props.currentDuration/60)}:{props.currentDuration%60>9?Math.floor(props.currentDuration%60):'0'+Math.floor(props.currentDuration%60)}</div>
-          <div className={c.bar__content}>
+        <StyledTrue__Player autoPlay={props.isPlaying} src={props.currentSong.track_file} onTimeUpdate={runUp} muted={props.isMuted?true:false} ref={audioRef} >
+        </StyledTrue__Player>
+        <StyledBar>
+          <StyledTimer>{Math.floor(props.currentTime/60)}:{Math.floor(props.currentTime)%60>9?Math.floor(props.currentTime%60):'0'+Math.floor(props.currentTime%60)}/{Math.floor(props.currentDuration/60)}:{props.currentDuration%60>9?Math.floor(props.currentDuration%60):'0'+Math.floor(props.currentDuration%60)}</StyledTimer>
+          <StyledBar__Content theme={theme}>
             <ProgressBar rewind={rewind} duration={props.currentDuration} currentTime={props.currentTime} player={audioRef}></ProgressBar>
-            <div className={c.bar__player_block}>
-              <div className={`${c.bar__player} ${c.player}`}>
-                <div className={c.player__controls}>
-                  <div onClick={mock} className={c.player__btn_prev}>
-                    <svg className={c.player__btn_prev_svg} alt="prev">
+            <StyledBar__Player_Block>
+              <StyledBar__Player_Player>
+                <StyledPlayer__Controls>
+                  <StyledPlayer__Btn_Prev_Button__Icon onClick={mock}>
+                    <Styled__Btn_Prev_Svg alt="prev">
                       <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
-                    </svg>
-                  </div>
-                  <div onClick={togglePlay} className={`${c.player__btn_play} ${c._btn}`}>
+                    </Styled__Btn_Prev_Svg>
+                  </StyledPlayer__Btn_Prev_Button__Icon>
+                  <StyledPlayer__Btn_Play onClick={togglePlay}>
                   {props.isPlaying?
-                    <svg className={c.player__btn_play_svg} width="15" height="19" viewBox="0 0 15 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <Styled__Btn_Play_Svg width="15" height="19" viewBox="0 0 15 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect width="5" height="19" fill="#D9D9D9"/>
                       <rect x="10" width="5" height="19" fill="#D9D9D9"/>
-                    </svg>:
-                    <svg className={c.player__btn_play_svg} alt="play">
+                    </Styled__Btn_Play_Svg>:
+                    <Styled__Btn_Play_Svg alt="play">
                       <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
-                    </svg>}
-                  </div>
-                  <div onClick={mock} className={`${c.player__btn_next} ${c._btn_icon} `}>
-                    <svg className={`${c.player__btn_next_svg} `} alt="next">
+                    </Styled__Btn_Play_Svg>}
+                  </StyledPlayer__Btn_Play>
+                  <StyledPlayer__Btn_Next_Button__Icon onClick={mock}>
+                    <Styled__Btn_Next_Svg alt="next">
                       <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
-                    </svg>
-                  </div>
-                  <div onClick={toggleLoop} className={`${c.player__btn_repeat}`}>
-                    <svg className={`${c.player__btn_repeat_svg} ${c._btn_icon} ${props.isLoop? c.active:''}`} alt="repeat">
+                    </Styled__Btn_Next_Svg>
+                  </StyledPlayer__Btn_Next_Button__Icon>
+                  <StyledPlayer__Btn_Repeat_Button__Icon onClick={toggleLoop}>
+                    <Styled__Btn_Repeat_Svg isLoop={props.isLoop} alt="repeat">
                       <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
-                    </svg>
-                  </div>
-                  <div  onClick={mock} className={`${c.player__btn_shuffle} ${c._btn_icon}`}>
-                    <svg className={`${c.player__btn_shuffle_svg} ${props.isShuffle? c.active:''}`} alt="shuffle">
+                    </Styled__Btn_Repeat_Svg>
+                  </StyledPlayer__Btn_Repeat_Button__Icon>
+                  <StyledPlayer__Btn_Shuffle_Button__Icon onClick={mock}>
+                    <Styled__Btn_Shuffle_Svg isShuffle={props.isShuffle} alt="shuffle">
                       <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
-                    </svg>
-                  </div>
-                </div>
+                    </Styled__Btn_Shuffle_Svg>
+                  </StyledPlayer__Btn_Shuffle_Button__Icon>
+                </StyledPlayer__Controls>
                 
-                <div className={`${c.player__track_play} ${c.track_play}`}>
-                  <div className={c.track_play__contain}>
-                    <div className={c.track_play__image}>
-                      <svg className={c.track_play__svg} alt="music">
+                <StyledPlayer__Track_Play_Track__Play>
+                  <StyledTrack_Play__Contain>
+                    <StyledTrack_Play__Image>
+                      <StyledTrack_Play__Svg alt="music">
                         <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                      </svg>
-                    </div>
-                    <div className={c.track_play__author}>
-                      <a className={c.track_play__author_link} href="http://">{props.currentSong.name}</a>
-                    </div>
-                    <div className={c.track_play__album}>
-                      <a className={c.track_play__album_link} href="http://">{props.currentSong.author}</a>
-                    </div>
-                  </div>
+                      </StyledTrack_Play__Svg>
+                    </StyledTrack_Play__Image>
+                    <StyledTrack_Play__Author>
+                      <StyledTrack_Play__Author_Link theme={theme} href="http://">{props.currentSong.name}</StyledTrack_Play__Author_Link>
+                    </StyledTrack_Play__Author>
+                    <StyledTrack_Play__Album>
+                      <StyledTrack_Play__Album_Link theme={theme} href="http://">{props.currentSong.author}</StyledTrack_Play__Album_Link>
+                    </StyledTrack_Play__Album>
+                  </StyledTrack_Play__Contain>
 
-                  <div className={c.track_play__like_dis}>
-                    <div className={`${c.track_play__like} ${c._btn_icon}`}>
-                      <svg className={c.track_play__like_svg} alt="like">
+                  <StyledTrack_Play__Like_Dis>
+                    <StyledTrack_Play__Like>
+                      <StyledTrack_Play__Like_Svg alt="like">
                         <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                    </div>
-                    <div className={`${c.track_play__dislike} ${c._btn_icon}`}>
-                      <svg className={c.track_play__dislike_svg} alt="dislike">
+                      </StyledTrack_Play__Like_Svg>
+                    </StyledTrack_Play__Like>
+                    <StyledTrack_Play__Dislike>
+                      <StyledTrack_Play__Dislike_Svg alt="dislike">
                         <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className={`${c.bar__volume_block} ${c.volume}`}>
-                <div className={c.volume__content}>
-                  <div onClick={toggleMute} className={c.volume__image}>
-                    <svg className={c.volume__svg} alt="volume">
+                      </StyledTrack_Play__Dislike_Svg>
+                    </StyledTrack_Play__Dislike>
+                  </StyledTrack_Play__Like_Dis>
+                </StyledPlayer__Track_Play_Track__Play>
+              </StyledBar__Player_Player>
+              <StyledBar__Volume_Block_Volume>
+                <StyledVolume__Content>
+                  <StyledVolume__Image onClick={toggleMute}>
+                    <StyledVolume__Svg alt="volume">
                       <use xlinkHref="img/icon/sprite.svg#icon-volume"></use>
-                    </svg>
-                  </div>
-                  <div className={`${c.volume__progress} ${c._btn}`}>
-                    <input
-                      className={`${c.volume__progress_line} ${c._btn}`}
+                    </StyledVolume__Svg>
+                  </StyledVolume__Image>
+                  <StyledVolume__Progress>
+                    <StyledVolume__Progress_Line
                       type="range"
                       name="range"
                       max='100'
                       onChange={volumeChange}
                     />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                  </StyledVolume__Progress>
+                </StyledVolume__Content>
+              </StyledBar__Volume_Block_Volume>
+            </StyledBar__Player_Block>
+          </StyledBar__Content>
+        </StyledBar>
       </Fragment>
     );
 }
