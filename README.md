@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# оценочное время на д/з по редаксу - 5 часов.
+
+# итоговое время на д/з ао редаксу - 8 часов. 
+
 ## Available Scripts
 
 In the project directory, you can run:
