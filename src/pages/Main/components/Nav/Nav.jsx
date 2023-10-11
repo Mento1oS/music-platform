@@ -5,9 +5,12 @@ import { StyledMain__Nav_Nav, StyledBurger__Line,
   StyledNav__Burger_Burger, StyledNav__Logo_Logo, 
   StyledNav__Menu_Menu} from './styles';
 import { useThemeContext } from '../../../../providers/ThemeProvider';
+import { useDispatch } from 'react-redux';
+import { setIsToPass, setUser } from '../../../../store/slices/userSlice';
 function Nav(props){
     const [isVisibleBurger, setIsVisibleBurger] = useState(true);
     const {toggleTheme, theme} =useThemeContext();
+    const dispatch = useDispatch();
     return(
         <StyledMain__Nav_Nav theme={theme}>
             <StyledNav__Logo_Logo>
@@ -30,11 +33,11 @@ function Nav(props){
                 </StyledMenu__Item>
                 <StyledMenu__Item>
                   <StyledMenu__Link theme={theme} onClick={()=>{
-                    props.setUser({
+                    dispatch(setUser({
                       mail:'', 
                       password:'', 
-                      password__double:''})
-                    props.setIsToPass(false)}} to='/signin'>Войти</StyledMenu__Link>
+                      password__double:''}));
+                    dispatch(setIsToPass(false));}} to='/signin'>Войти</StyledMenu__Link>
                 </StyledMenu__Item>
                 <StyledMenu__Item onClick={toggleTheme}>
                   {theme.name==='dark'?

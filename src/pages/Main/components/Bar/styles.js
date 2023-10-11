@@ -206,8 +206,8 @@ const StyledDefault__Svg = styled.svg`
   fill: transparent;
 `
 export const Styled__Btn_Repeat_Svg = styled(StyledDefault__Svg)`
-  ${({isLoop})=>{
-    if(isLoop){
+  ${({isloop})=>{
+    if(isloop==='true'){
       return(
         `stroke: #ffffff;
          width: 18px;`
@@ -221,8 +221,8 @@ export const Styled__Btn_Repeat_Svg = styled(StyledDefault__Svg)`
   }}
 `;
 export const Styled__Btn_Shuffle_Svg = styled(StyledDefault__Svg)`
-  ${({isShuffle})=>{
-    if(isShuffle){
+  ${({isshuffle})=>{
+    if(isshuffle==='true'){
       return(
         `stroke: #ffffff;
          width: 19px;`)}

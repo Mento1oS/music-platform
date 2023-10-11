@@ -1,29 +1,33 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useThemeContext } from "../../../../providers/ThemeProvider";
 import { StyledColumn1, StyledColumn2, 
-  StyledColumn3, StyledPlaylist__Item, 
+  StyledColumn3, StyledPlaylist__Item, StyledCircle,
   StyledPlaylist__Track_Track, StyledTrack__Album,
   StyledTrack__Album_Link, StyledTrack__Author, 
   StyledTrack__Author_Link, StyledTrack__Time_Svg, 
   StyledTrack__Time_Text, StyledTrack__Title, 
   StyledTrack__Title_Image, StyledTrack__Title_Link, 
-  StyledTrack__Title_Span, StyledTrack__Title_Svg } from "./styles";
-
+  StyledTrack__Title_Span, StyledTrack__Title_Svg, StyledBubble } from "./styles";
+import { setCurrentSong, togglePlay } from "../../../../store/slices/playerSlice";
 export default function PlayList__item(props){
   const {theme} = useThemeContext();
+  const dispatch = useDispatch();
+  const isSkeleton = useSelector(state=>state.theme.isSkeleton);
+  const isPlaying =useSelector(state=>state.player.isPlaying); 
     return(
           <StyledPlaylist__Item>
             <StyledPlaylist__Track_Track onClick={()=>{
-                  props.setCurrentSong(()=>{
-                        return props.song});
-                  props.setIsPlaying(true);}}>
+                  dispatch(setCurrentSong(props.song));
+                  dispatch(togglePlay(true));}}>
               <StyledTrack__Title>
                 <StyledTrack__Title_Image>
-                  <StyledTrack__Title_Svg alt="music">
-                    {props.isSkeleton?(<img src='/img/Group12.png'></img>):
-                      (<use xlinkHref="img/icon/sprite.svg#icon-note"></use>)}
-                  </StyledTrack__Title_Svg>
+                {isSkeleton?<img src='/img/Group12.png'></img>:props.active?isPlaying?
+                  <StyledBubble></StyledBubble>:<StyledCircle></StyledCircle>:
+                  <StyledTrack__Title_Svg active={props.active.toString()} alt="music">  
+                      <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                  </StyledTrack__Title_Svg>}
                 </StyledTrack__Title_Image>
-                  {props.isSkeleton ? <StyledColumn1></StyledColumn1>
+                  {isSkeleton ? <StyledColumn1></StyledColumn1>
                     :<div className='track__title_text'>
                       <StyledTrack__Title_Link theme={theme} href="http://">
                         {props.song.name}
@@ -33,10 +37,10 @@ export default function PlayList__item(props){
                       </StyledTrack__Title_Link></div>}
               </StyledTrack__Title>
               <StyledTrack__Author>
-                {props.isSkeleton? <StyledColumn2></StyledColumn2>
+                {isSkeleton? <StyledColumn2></StyledColumn2>
                   :<StyledTrack__Author_Link theme={theme} href="http://">{props.song.author}</StyledTrack__Author_Link>}
               </StyledTrack__Author>
-              {props.isSkeleton? <StyledColumn3></StyledColumn3>
+              {isSkeleton? <StyledColumn3></StyledColumn3>
                 :<><StyledTrack__Album>
                   <StyledTrack__Album_Link href="http://">{props.song.album}</StyledTrack__Album_Link>
                   </StyledTrack__Album>

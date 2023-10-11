@@ -6,17 +6,18 @@ import NotFoundPage from './NotFound/NotFound';
 import { ProtectedRoute } from './ProtectedRoute';
 import MyPlaylist from './MyPlaylist/components/MyPlaylist/MyPlaylist';
 import Compilation from './Compilation/components/Compilation/Compilation';
+import { useSelector } from 'react-redux';
 export default function AppRoutes(props){
+    const isToPass = useSelector(state => state.user.isToPass);
     return(
         <Routes>
-            <Route element={<ProtectedRoute isAllowed={props.isToPass}/>}>
-                <Route path='/' element={<Index currentDuration={props.currentDuration} setCurrentDuration={props.setCurrentDuration} currentTime={props.currentTime} setCurrentTime={props.setCurrentTime} isPlaying={props.isPlaying} setIsPlaying={props.setIsPlaying} isLoop={props.isLoop} setIsLoop={props.setIsLoop}
-                    isShuffle={props.isShuffle} setIsShuffle={props.setIsShuffle} isMuted={props.isMuted} setIsMuted={props.setIsMuted} tracks={props.tracks} setTracks={props.setTracks} currentSong={props.currentSong} setCurrentSong={props.setCurrentSong} accessToken={props.accessToken} refreshToken={props.refreshToken} setAccessToken={props.setAccessToken} setRefreshToken={props.setRefreshToken} user={props.user} setUser={props.setUser} isToPass={props.isToPass} setIsToPass={props.setIsToPass}/>}/>
+            <Route element={<ProtectedRoute isAllowed={isToPass}/>}>
+                <Route path='/' element={<Index/>}/>
                 <Route path='/myplaylist' element={<MyPlaylist/>}></Route>
                 <Route path='/compilation/:id' element={<Compilation/>}></Route>
             </Route>
-            <Route path="/signin" element={<SignIn user={props.user} setUser={props.setUser} isToPass={props.isToPass} setIsToPass={props.setIsToPass}/>} />
-            <Route path="/signup" element={<SignUp user={props.user} setUser={props.setUser} isToPass={props.isToPass} setIsToPass={props.setIsToPass}/>} />
+            <Route path="/signin" element={<SignIn/>} />
+            <Route path="/signup" element={<SignUp/>} />
             <Route path="*" element={<NotFoundPage/>} />
         </Routes>
     )

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes, css} from "styled-components";
 export const StyledPlaylist__Item = styled.div`
     width: 100%;
     display: block;
@@ -60,6 +60,30 @@ export const StyledTrack__Title_Svg = styled.svg`
     fill: transparent;
     stroke: #4e4e4e;  
 `;
+const bubbleAnimation = keyframes`
+  0% {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.5);
+  }`;
+export const StyledBubble = styled.div`
+  width: 16px;
+  height: 16px;
+  background-color: #b672ff;
+  border-radius: 8px;
+  display: block;
+  animation: ${bubbleAnimation} 0.6s ease-in-out infinite both;
+`;
+export const StyledCircle = styled.div`
+  width: 16px;
+  height: 16px;
+  background-color: #b672ff;
+  border-radius: 8px;
+  display: block;`
 export const StyledTrack__Title_Link = styled.a`
     font-style: normal;
     font-weight: 400;

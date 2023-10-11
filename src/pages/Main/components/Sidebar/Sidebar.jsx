@@ -5,19 +5,24 @@ import { StyledMain__Sidebar, StyledSidebar__Icon,
   StyledSidebar__Personal, StyledSidebar__Personal_Name,
   StyledSkeleton, StyledStyled__Block } from './styles';
 import { useThemeContext } from '../../../../providers/ThemeProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsToPass, setUser } from '../../../../store/slices/userSlice';
 function Sidebar(props){
   const {theme} = useThemeContext();
+  const isSkeleton = useSelector(state=>state.theme.isSkeleton);
+  const dispatch = useDispatch();
+  const user = useSelector(state=>state.user.user);
     return(
         <StyledMain__Sidebar>
             <StyledSidebar__Personal>
-              <StyledSidebar__Personal_Name theme={theme}>{props.user.mail}</StyledSidebar__Personal_Name>
+              <StyledSidebar__Personal_Name theme={theme}>{user.mail}</StyledSidebar__Personal_Name>
               <StyledSidebar__Icon theme={theme}>
                 <NavLink onClick={()=>{
-                  props.setUser({
+                  dispatch(setUser({
                     mail: '',
                     password: '',
-                    password__double: ''});
-                  props.setIsToPass(false);}} to='./signin'>
+                    password__double: ''}));
+                  dispatch(setIsToPass(false));}} to='./signin'>
                 {theme.name==='dark'?
                   <svg alt="logout">
                     <use xlinkHref="img/icon/sprite.svg#logout"></use>
@@ -34,7 +39,7 @@ function Sidebar(props){
               <StyledSidebar__List>
                 <StyledSidebar__Item>
                   <StyledSidebar__Link to='compilation/1'>
-                    {props.isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
+                    {isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
                       src="img/playlist01.png"
                       alt="day's playlist"
                     />}
@@ -42,7 +47,7 @@ function Sidebar(props){
                 </StyledSidebar__Item>
                 <StyledSidebar__Item>
                   <StyledSidebar__Link to='/compilation/2'>
-                    {props.isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
+                    {isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
                       src="img/playlist02.png"
                       alt="day's playlist"
                     />}
@@ -50,7 +55,7 @@ function Sidebar(props){
                 </StyledSidebar__Item>
                 <StyledSidebar__Item>
                   <StyledSidebar__Link to='compilation/3'>
-                    {props.isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
+                    {isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
                       src="img/playlist03.png"
                       alt="day's playlist"
                     />}

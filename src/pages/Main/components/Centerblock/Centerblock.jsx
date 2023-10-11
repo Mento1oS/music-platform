@@ -1,6 +1,5 @@
 import PlayList__item from '../PlayListItem/PlayListItem';
 import Dropout from '../Dropout/Dropout';
-import { useState } from 'react';
 import { StyledCenterblock__Content, StyledCenterblock__Filter,
   StyledCenterblock__Search_Search, StyledCenterblock__h2, 
   StyledContent__Playlist_Playlist, StyledContent__Title_Playlist_Title, 
@@ -13,8 +12,14 @@ import { StyledCenterblock__Content, StyledCenterblock__Filter,
   Styled_Btn_Text_Filter_Button_Author, Styled_Btn_Text_Filter_Button_Genre, 
   Styled_Btn_Text_Filter_Button_Year } from './styles';
 import { useThemeContext } from '../../../../providers/ThemeProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { statusChange } from '../../../../store/slices/dropoutStatusSlice';
 function Centerblock(props){
-    const [dropoutStatus, setDropoutStatus] = useState([false, false, false]);
+    const dispatch = useDispatch();
+    const tracks = useSelector(state=>state.player.trackList);
+    const currentSong = useSelector(state=>state.player.currentSong);
+    const dropoutStatus = useSelector(state => state.dropoutStatus.status);
+    const isSkeleton = useSelector(state=>state.theme.isSkeleton);
     const singers=['messi', 'Noize MC', 'RHCP', 'Pyrokinesis', 'Joy Division', 'Lol', 'mocker'];
     const years = ['1987', '2022', '1995', '2015', '1980'];
     const genres = ['rock', 'rap', 'hip-hop', 'post-punk', 'alternative rock', 'punk-rock'];
@@ -22,18 +27,8 @@ function Centerblock(props){
       const target = e.target;
       const parent = target.parentElement;
       const children = Array.from(parent.children);
-      const index= children.indexOf(target)-1;
-      switch(index){
-        case 0:
-          setDropoutStatus([!dropoutStatus[0], false, false]);
-          break;
-        case 1:
-          setDropoutStatus([false, !dropoutStatus[1], false]);
-          break;
-        case 2:
-          setDropoutStatus([false, false, !dropoutStatus[2]]);
-          break;
-      }
+      const index = children.indexOf(target)-1;
+      dispatch(statusChange(index));
     }
     const {theme} = useThemeContext();
     return(
@@ -78,21 +73,21 @@ function Centerblock(props){
                 </StyledPlaylist_Title__Col__Col04>
               </StyledContent__Title_Playlist_Title>
               <StyledContent__Playlist_Playlist>
-                {props.isSkeleton?
-                <><PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/>
-                <PlayList__item isSkeleton={props.isSkeleton} title='' author='' album='' duration=''/></>
-                :props.tracks.map((elem=><PlayList__item key={elem.id} isPlaying={props.isPlaying} setIsPlaying={props.setIsPlaying} setCurrentSong={props.setCurrentSong} currentSong={props.currentSong} isSkeleton={props.isSkeleton} song={elem}/>))
+                {isSkeleton?
+                <><PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/>
+                <PlayList__item active={false} title='' author='' album='' duration=''/></>
+                :tracks.map((elem=><PlayList__item active={elem.id===currentSong.id} key={elem.id} song={elem}/>))
                 }
               </StyledContent__Playlist_Playlist>
             </StyledCenterblock__Content>

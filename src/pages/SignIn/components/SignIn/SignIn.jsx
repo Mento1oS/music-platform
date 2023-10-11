@@ -1,14 +1,14 @@
-import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { StyledWrapper, StyledContainer__Enter, 
   StyledModal__Form__Login, StyledModal__Block, 
   StyledModal__Logo, StyledModal__Btn__Enter, 
   StyledModal__Btn__Signup, StyledNavLink,
   StyledModal__Input_Login, StyledModal__Input_Password} from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsToPass, setSignIn, setUser } from '../../../../store/slices/userSlice';
 export default function SignIn(props){
-  const [signIn, setSignIn] = useState({
-    mail:'',
-    password:''});
+  const dispatch = useDispatch();
+  const signIn = useSelector(state => state.user.signIn);
   const navigate = useNavigate();
   const handleSubmit=(e)=>{
     e.preventDefault();
@@ -29,17 +29,16 @@ export default function SignIn(props){
         return response.json()})
       .then((response)=>{
         console.log(response);
-        props.setIsToPass(true);
-        props.setUser({
+        dispatch(setIsToPass(true));
+        dispatch(setUser({
           mail: signIn.mail,
           password: signIn.password,
-          password__double: signIn.password});
-        setSignIn({...signIn, password:''});
+          password__double: signIn.password}));
+          dispatch(setSignIn({...signIn, password:''}));
         navigate('/')})
       .catch((error)=>{
-        props.setIsToPass(false);
-        setSignIn({...signIn,
-        password:''});
+        dispatch(setIsToPass(false));
+        dispatch(setSignIn({...signIn, password:''}));
         alert(error)})
       }
   }
@@ -53,18 +52,18 @@ export default function SignIn(props){
                 <img src="../img/logo_modal.png" alt="logo" />
               </StyledModal__Logo>
             </NavLink>
-            <StyledModal__Input_Login onChange={(e)=>{setSignIn({
+            <StyledModal__Input_Login onChange={(e)=>{dispatch(setSignIn({
               ...signIn,
-              mail: e.target.value});
+              mail: e.target.value}));
             }}
               type="text"
               name="login"
               placeholder="Почта"
               value={signIn.mail}
             />
-            <StyledModal__Input_Password onChange={(e)=>{setSignIn({
+            <StyledModal__Input_Password onChange={(e)=>{dispatch(setSignIn({
               ...signIn,
-              password: e.target.value});
+              password: e.target.value}));
             }}
               type="password"
               name="password"

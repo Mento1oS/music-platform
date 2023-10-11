@@ -2,15 +2,22 @@ import { Fragment, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import Bar from '../Bar/Bar';
 import Main from '../Main/Main';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTracks } from '../../../../store/slices/playerSlice';
+import { setIsSkeleton } from '../../../../store/slices/themeSlice';
+import { setAccessToken, setRefreshToken } from '../../../../store/slices/userSlice';
 export default function Index(props){
-    const [isSkeleton, setIsSkeleton] = useState(true);
+  const currentSong = useSelector(state=>state.player.currentSong);
+  const refreshToken = useSelector(state=>state.user.refreshToken);
+  const user = useSelector(state=>state.user.user);
+  const dispatch = useDispatch();
     const interval=useRef(0);
     useEffect(()=>{
         fetch("https://skypro-music-api.skyeng.tech/user/token/", {
             method: "POST",
             body: JSON.stringify({
-              email: props.user.mail,
-              password: props.user.password,
+              email: user.mail,
+              password: user.password,
             }),
             headers: {
               "content-type": "application/json",
@@ -18,8 +25,8 @@ export default function Index(props){
           })
         .then((response) => response.json())
         .then((json) => {
-          props.setRefreshToken(json.refresh);
-          props.setAccessToken(json.access);
+          dispatch(setRefreshToken(json.refresh));
+          dispatch(setAccessToken(json.access));
           console.log(json);
           return(json)})
         .then((data)=>{
@@ -27,7 +34,7 @@ export default function Index(props){
             fetch("https://skypro-music-api.skyeng.tech/user/token/refresh/", {
               method: "POST",
               body: JSON.stringify({
-                refresh: props.refreshToken?props.refreshToken:data.refresh,
+                refresh: refreshToken?refreshToken:data.refresh,
               }),
               headers: {
                 "content-type": "application/json",
@@ -37,13 +44,12 @@ export default function Index(props){
             .then((json) =>{
               console.log(data);
               console.log(json);
-              props.setAccessToken(json.access)});
+              dispatch(setAccessToken(json.access))});
             }, 80000);
         })
       return () => clearInterval(interval.current)
     },[]);
     useEffect(()=>{
-      // console.log(`${data.refresh} call from song search`);
       fetch("https://skypro-music-api.skyeng.tech/catalog/track/all/", {
         method: "GET",
         headers: {
@@ -53,16 +59,13 @@ export default function Index(props){
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
-        props.setTracks(()=>{
-          return json;
-        })
-        setIsSkeleton(false);
+        dispatch(setTracks(json));
+        dispatch(setIsSkeleton(false));
       })},[]);
   return(
       <Fragment>
-          <Main currentDuration={props.currentDuration} setCurrentDuration={props.setCurrentDuration} isPlaying={props.isPlaying} setIsPlaying={props.setIsPlaying} tracks={props.tracks} currentSong={props.currentSong} setCurrentSong={props.setCurrentSong} isSkeleton={isSkeleton} user={props.user} setUser={props.setUser} isToPass={props.isToPass} setIsToPass={props.setIsToPass}/>
-          {props.currentSong.track_file?<Bar currentDuration={props.currentDuration} setCurrentDuration={props.setCurrentDuration} currentTime={props.currentTime} setCurrentTime={props.setCurrentTime} isPlaying={props.isPlaying} setIsPlaying={props.setIsPlaying} isLoop={props.isLoop} setIsLoop={props.setIsLoop}
-        isShuffle={props.isShuffle} setIsShuffle={props.setIsShuffle} isMuted={props.isMuted} setIsMuted={props.setIsMuted} currentSong={props.currentSong} setCurrentSong={props.setCurrentSong}/>:''}
+          <Main/>
+          {currentSong.track_file?<Bar/>:''}
       </Fragment>
   )
 }
