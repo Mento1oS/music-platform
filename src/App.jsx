@@ -8,10 +8,6 @@ import { setCurrentTheme } from './store/slices/themeSlice';
 function App() {
   const dispatch = useDispatch();
   const currentTheme = useSelector(state=>state.theme.currentTheme);
-  // const [user, setUser] = useState({
-  //   mail: '',
-  //   password: '',
-  //   password__double: ''});
   useEffect(()=>{
     dispatch(setCurrentTheme(themes.dark));
   },[]);
