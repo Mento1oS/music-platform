@@ -6,6 +6,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # итоговое время на д/з ао редаксу - 8 часов. 
 
+# оценочное время на 2 д/з по редаксу - 8 часов.
+
+# итоговое время на 2 д/з ао редаксу - 12 часов. 
+
 ## Available Scripts
 
 In the project directory, you can run:
