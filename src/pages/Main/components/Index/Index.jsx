@@ -1,16 +1,18 @@
-import { Fragment, useEffect, useRef } from 'react';
-import { useState } from 'react';
-import Bar from '../Bar/Bar';
-import Main from '../Main/Main';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTracks } from '../../../../store/slices/playerSlice';
 import { setIsSkeleton } from '../../../../store/slices/themeSlice';
 import { setAccessToken, setRefreshToken } from '../../../../store/slices/userSlice';
-export default function Index(props){
-  const currentSong = useSelector(state=>state.player.currentSong);
+import { useGetAllTracksInitialQuery } from '../../../../store/middlewares/favorites';
+export default function Index({children}){
   const refreshToken = useSelector(state=>state.user.refreshToken);
   const user = useSelector(state=>state.user.user);
   const dispatch = useDispatch();
+  const {data =[], isSuccess} = useGetAllTracksInitialQuery();
+  dispatch(setTracks(data));
+    if(isSuccess){
+      dispatch(setIsSkeleton(false));
+    }
     const interval=useRef(0);
     useEffect(()=>{
         fetch("https://skypro-music-api.skyeng.tech/user/token/", {
@@ -49,23 +51,7 @@ export default function Index(props){
         })
       return () => clearInterval(interval.current)
     },[]);
-    useEffect(()=>{
-      fetch("https://skypro-music-api.skyeng.tech/catalog/track/all/", {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        dispatch(setTracks(json));
-        dispatch(setIsSkeleton(false));
-      })},[]);
   return(
-      <Fragment>
-          <Main/>
-          {currentSong.track_file?<Bar/>:''}
-      </Fragment>
+      children 
   )
 }

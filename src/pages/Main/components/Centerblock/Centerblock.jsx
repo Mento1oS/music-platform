@@ -87,7 +87,7 @@ function Centerblock(props){
                 <PlayList__item active={false} title='' author='' album='' duration=''/>
                 <PlayList__item active={false} title='' author='' album='' duration=''/>
                 <PlayList__item active={false} title='' author='' album='' duration=''/></>
-                :tracks.map((elem=><PlayList__item active={elem.id===currentSong.id} key={elem.id} song={elem}/>))
+                :tracks.map((elem=><PlayList__item mine={false} active={elem.id===currentSong.id} number={elem.id} key={elem.id} song={elem}/>))
                 }
               </StyledContent__Playlist_Playlist>
             </StyledCenterblock__Content>

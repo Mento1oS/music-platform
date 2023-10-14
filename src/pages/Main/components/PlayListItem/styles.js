@@ -131,6 +131,7 @@ export const StyledTrack__Time_Svg = styled.svg`
     margin-right: 17px;
     fill: transparent;
     stroke: #696969;  
+    cursor: pointer;
 `;
 export const StyledTrack__Time_Text = styled.span`
     font-style: normal;

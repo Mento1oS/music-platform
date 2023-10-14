@@ -12,10 +12,14 @@ import { StyledBar, StyledBar__Content, StyledBar__Player_Block,
   StyledVolume__Image, StyledVolume__Progress, StyledVolume__Progress_Line, StyledVolume__Svg, Styled__Btn_Next_Svg,
   Styled__Btn_Play_Svg, Styled__Btn_Prev_Svg, Styled__Btn_Repeat_Svg, Styled__Btn_Shuffle_Svg } from "./styles";
 import { useThemeContext } from "../../../../providers/ThemeProvider";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";import { useGetFavoriteSongsQuery } from "../../../../store/middlewares/favorites";
 import { toggleMute, toggleLoop, togglePlay, setCurrentDuration, setCurrentTime, playNextSong, playPrevSong, toggleShuffle } from "../../../../store/slices/playerSlice";
 function Bar(props){
+  const accessToken = useSelector(state=>state.user.accessToken);
+  const {data = []} = useGetFavoriteSongsQuery({
+    accessToken: accessToken});
   const dispatch = useDispatch();
+  const onMyPlaylist = useSelector(state=>state.player.onMyPlaylist);
   const isMuted = useSelector(state => state.player.isMuted);
   const isLoop = useSelector(state => state.player.isLoop);
   const isPlaying = useSelector(state => state.player.isPlaying);
@@ -39,7 +43,7 @@ function Bar(props){
     audioRef.current.volume = (Number(e.target.value))/100;
   }
   const switchShuffle=()=>{
-    dispatch(toggleShuffle());
+    dispatch(toggleShuffle(data));
   }
   const switchLoop=()=>{
     dispatch((toggleLoop()));
@@ -61,11 +65,12 @@ function Bar(props){
     alert('Функционал ещё не готов');
   }
   const playNext = ()=>{
-    dispatch(playNextSong(isShuffle));
+    console.log(onMyPlaylist);
+    onMyPlaylist?dispatch(playNextSong(data)):dispatch(playNextSong());
   }
   const playPrev = ()=>{
     if(Number(currentTime)<=5){
-      dispatch(playPrevSong(isShuffle));
+      onMyPlaylist?dispatch(playPrevSong(data)):dispatch(playPrevSong());
     }
     else{
       dispatch(setCurrentTime(0));
