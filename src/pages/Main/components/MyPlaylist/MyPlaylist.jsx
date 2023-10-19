@@ -13,15 +13,12 @@ export default function MyPlaylist(){
     const {theme} = useThemeContext();
     const currentSong = useSelector(state=> state.player.currentSong);
     const accessToken = useSelector(state=>state.user.accessToken);
-    const {data =[], isLoading} = useGetFavoriteSongsQuery({
+    const {data =[], isError} = useGetFavoriteSongsQuery({
       accessToken: accessToken}
-    ).unwrap.then((payload)=>{
-      try {
-        console.log(payload);
-      } catch (error) {
-        alert(error);
-      }
-    });
+    )
+    if(isError){
+      console.log(new Error);
+    }
     return(
         <StyledMain__Centerblock_CenterBlock>
             <StyledCenterblock__Search_Search>
