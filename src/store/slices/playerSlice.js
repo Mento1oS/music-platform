@@ -91,7 +91,6 @@ const playerSlice = createSlice({
                 const index = array.indexOf(song);
                 array[index-1]?state.currentSong = array[index-1]:''; 
             }
-            console.log(action.payload);
             if(!state.isShuffle){
                 returnToTrack(action.payload?action.payload:state.trackList);
             }

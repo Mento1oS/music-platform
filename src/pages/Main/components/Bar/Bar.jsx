@@ -65,7 +65,6 @@ function Bar(props){
     alert('Функционал ещё не готов');
   }
   const playNext = ()=>{
-    console.log(onMyPlaylist);
     onMyPlaylist?dispatch(playNextSong(data)):dispatch(playNextSong());
   }
   const playPrev = ()=>{

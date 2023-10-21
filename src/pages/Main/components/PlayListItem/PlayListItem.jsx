@@ -16,23 +16,23 @@ export default function PlayList__item(props){
   const [likeSong] = useAddSongToFavoritesMutation(); 
   const [dislikeSong] = useDeleteSongFromFavoritesMutation()
   const handleLike = async ()=>{
-    await likeSong({id: props.number, accessToken: accessToken}).unwrap().then((payload)=>{
-      try {
+    try{
+      await likeSong({id: props.number, accessToken: accessToken}).unwrap().then((payload)=>{
         console.log(payload);
-      } catch (error) {
+      })} 
+    catch (error) {
         alert(error);
       }
-    });
     dispatch((addSongToMyShuffledPlaylist(props.song)));
   }
   const handleDislike = async()=>{
-    await dislikeSong({id: props.number, accessToken: accessToken}).unwrap().then((payload)=>{
-      try {
+    try{
+      await dislikeSong({id: props.number, accessToken: accessToken}).unwrap().then((payload)=>{
         console.log(payload);
-      } catch (error) {
+      })} 
+    catch (error) {
         alert(error);
       }
-    });
     dispatch((deleteSongFromMyShuffledPlaylist(props.song)));
   }
   const user = useSelector(state=>state.user.user);
