@@ -9,10 +9,9 @@ export default function Index({children}){
   const user = useSelector(state=>state.user.user);
   const dispatch = useDispatch();
   const {data =[], isSuccess} = useGetAllTracksInitialQuery();
-  dispatch(setTracks(data));
-    if(isSuccess){
-      dispatch(setIsSkeleton(false));
-    }
+  useEffect(()=>{
+    dispatch(setTracks(data));
+  },[isSuccess]);
     const interval=useRef(0);
     useEffect(()=>{
         fetch("https://skypro-music-api.skyeng.tech/user/token/", {
@@ -29,6 +28,7 @@ export default function Index({children}){
         .then((json) => {
           dispatch(setRefreshToken(json.refresh));
           dispatch(setAccessToken(json.access));
+          dispatch(setIsSkeleton(false));
           console.log(json);
           return(json)})
         .then((data)=>{
@@ -46,7 +46,7 @@ export default function Index({children}){
             .then((json) =>{
               console.log(data);
               console.log(json);
-              dispatch(setAccessToken(json.access))});
+              dispatch(setAccessToken(json.access));});
             }, 80000);
         })
       return () => clearInterval(interval.current)
