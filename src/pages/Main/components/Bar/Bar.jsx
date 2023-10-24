@@ -12,13 +12,18 @@ import { StyledBar, StyledBar__Content, StyledBar__Player_Block,
   StyledVolume__Image, StyledVolume__Progress, StyledVolume__Progress_Line, StyledVolume__Svg, Styled__Btn_Next_Svg,
   Styled__Btn_Play_Svg, Styled__Btn_Prev_Svg, Styled__Btn_Repeat_Svg, Styled__Btn_Shuffle_Svg } from "./styles";
 import { useThemeContext } from "../../../../providers/ThemeProvider";
-import { useDispatch, useSelector } from "react-redux";import { useGetFavoriteSongsQuery } from "../../../../store/middlewares/favorites";
-import { toggleMute, toggleLoop, togglePlay, setCurrentDuration, setCurrentTime, playNextSong, playPrevSong, toggleShuffle } from "../../../../store/slices/playerSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetFavoriteSongsQuery, useGetAllTracksQuery, useAddSongToFavoritesMutation, useDeleteSongFromFavoritesMutation } from "../../../../store/middlewares/favorites";
+import { toggleMute, toggleLoop, togglePlay, setCurrentDuration, setCurrentTime, playNextSong, 
+  playPrevSong, toggleShuffle, findCategoryArray, addSongToMyShuffledPlaylist, deleteSongFromMyShuffledPlaylist } from "../../../../store/slices/playerSlice";
 function Bar(props){
+  const isOnCategory = useSelector(state=>state.player.isOnCategory);
   const accessToken = useSelector(state=>state.user.accessToken);
   const {data = []} = useGetFavoriteSongsQuery({
     accessToken: accessToken});
   const dispatch = useDispatch();
+  const [likeSong] = useAddSongToFavoritesMutation(); 
+  const [dislikeSong] = useDeleteSongFromFavoritesMutation();
   const onMyPlaylist = useSelector(state=>state.player.onMyPlaylist);
   const isMuted = useSelector(state => state.player.isMuted);
   const isLoop = useSelector(state => state.player.isLoop);
@@ -28,6 +33,30 @@ function Bar(props){
   const currentTime = useSelector(state => state.player.currentTime);
   const isShuffle = useSelector(state=> state.player.isShuffle);
   const audioRef = useRef(null);
+  const wasChosenOnCategory = useSelector(state=>state.player.wasChosenOnCategory);
+  const rockTracks = useSelector(state=>state.player.rockTracks);
+  const electricTracks = useSelector(state=>state.player.electricTracks);
+  const classicTracks = useSelector(state=>state.player.classicTracks);
+  const handleLike = async ()=>{
+    try{
+      await likeSong({id: currentSong.id, accessToken: accessToken}).unwrap().then((payload)=>{
+        console.log(payload);
+      })} 
+    catch (error) {
+        alert(error);
+      }
+    dispatch((addSongToMyShuffledPlaylist(currentSong)));
+  }
+  const handleDislike = async()=>{
+    try{
+      await dislikeSong({id: currentSong.id, accessToken: accessToken}).unwrap().then((payload)=>{
+        console.log(payload);
+      })} 
+    catch (error) {
+        alert(error);
+      }
+    dispatch((deleteSongFromMyShuffledPlaylist(currentSong)));
+  }
   const durationChange = () =>{
     dispatch(setCurrentDuration(audioRef.current.duration));
   }
@@ -47,7 +76,7 @@ function Bar(props){
   }
   const switchLoop=()=>{
     dispatch((toggleLoop()));
-    isLoop ? audioRef.current.removeAttribute('loop'): audioRef.current.setAttribute('loop',true);
+    isLoop ? audioRef.current.removeAttribute('loop'):audioRef.current.setAttribute('loop',true);
   }
   const handleStart = () => {
     audioRef.current.play();
@@ -64,12 +93,26 @@ function Bar(props){
   const mock =()=>{
     alert('Функционал ещё не готов');
   }
+  const findArray=()=>{
+    if(rockTracks.includes(currentSong)){
+      return rockTracks;
+    }
+    if(electricTracks.includes(currentSong)){
+      return electricTracks;
+    }
+    if(classicTracks.includes(currentSong)){
+      return classicTracks;
+    }
+  }
   const playNext = ()=>{
-    onMyPlaylist?dispatch(playNextSong(data)):dispatch(playNextSong());
+    wasChosenOnCategory?dispatch(findCategoryArray()):'';
+    console.log(data);
+    onMyPlaylist?dispatch(playNextSong(data)):wasChosenOnCategory?dispatch(playNextSong(findArray())):dispatch(playNextSong());
   }
   const playPrev = ()=>{
+    wasChosenOnCategory?dispatch(findCategoryArray()):'';
     if(Number(currentTime)<=5){
-      onMyPlaylist?dispatch(playPrevSong(data)):dispatch(playPrevSong());
+      onMyPlaylist?dispatch(playPrevSong(data)):wasChosenOnCategory?dispatch(playPrevSong(findArray())):dispatch(playPrevSong());
     }
     else{
       dispatch(setCurrentTime(0));
@@ -93,7 +136,7 @@ function Bar(props){
                 <StyledPlayer__Controls>
                   <StyledPlayer__Btn_Prev_Button__Icon onClick={playPrev}>
                     <Styled__Btn_Prev_Svg alt="prev">
-                      <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
+                      <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#icon-prev":"img/icon/sprite.svg#icon-prev"}></use>
                     </Styled__Btn_Prev_Svg>
                   </StyledPlayer__Btn_Prev_Button__Icon>
                   <StyledPlayer__Btn_Play onClick={switchPlay}>
@@ -103,31 +146,30 @@ function Bar(props){
                       <rect x="10" width="5" height="19" fill="#D9D9D9"/>
                     </Styled__Btn_Play_Svg>:
                     <Styled__Btn_Play_Svg alt="play">
-                      <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
+                      <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#icon-play":"img/icon/sprite.svg#icon-play"}></use>
                     </Styled__Btn_Play_Svg>}
                   </StyledPlayer__Btn_Play>
                   <StyledPlayer__Btn_Next_Button__Icon onClick={playNext}>
                     <Styled__Btn_Next_Svg alt="next">
-                      <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
+                      <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#icon-next":"img/icon/sprite.svg#icon-next"}></use>
                     </Styled__Btn_Next_Svg>
                   </StyledPlayer__Btn_Next_Button__Icon>
                   <StyledPlayer__Btn_Repeat_Button__Icon onClick={switchLoop}>
                     <Styled__Btn_Repeat_Svg isloop={(isLoop).toString()} alt="repeat">
-                      <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
+                      <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#icon-repeat":"img/icon/sprite.svg#icon-repeat"}></use>
                     </Styled__Btn_Repeat_Svg>
                   </StyledPlayer__Btn_Repeat_Button__Icon>
                   <StyledPlayer__Btn_Shuffle_Button__Icon onClick={switchShuffle}>
                     <Styled__Btn_Shuffle_Svg isshuffle={(isShuffle).toString()} alt="shuffle">
-                      <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                      <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#icon-shuffle":"img/icon/sprite.svg#icon-shuffle"}></use>
                     </Styled__Btn_Shuffle_Svg>
                   </StyledPlayer__Btn_Shuffle_Button__Icon>
                 </StyledPlayer__Controls>
-                
                 <StyledPlayer__Track_Play_Track__Play>
                   <StyledTrack_Play__Contain>
                     <StyledTrack_Play__Image>
                       <StyledTrack_Play__Svg alt="music">
-                        <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                        <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#icon-note":"img/icon/sprite.svg#icon-note"}></use>
                       </StyledTrack_Play__Svg>
                     </StyledTrack_Play__Image>
                     <StyledTrack_Play__Author>
@@ -139,16 +181,18 @@ function Bar(props){
                   </StyledTrack_Play__Contain>
 
                   <StyledTrack_Play__Like_Dis>
-                    <StyledTrack_Play__Like>
-                      <StyledTrack_Play__Like_Svg alt="like">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      </StyledTrack_Play__Like_Svg>
-                    </StyledTrack_Play__Like>
-                    <StyledTrack_Play__Dislike>
-                      <StyledTrack_Play__Dislike_Svg alt="dislike">
-                        <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
-                      </StyledTrack_Play__Dislike_Svg>
-                    </StyledTrack_Play__Dislike>
+                    {data!==undefined?data.find(elem=>elem.id===currentSong.id)?
+                      <StyledTrack_Play__Dislike onClick={handleDislike}>
+                        <StyledTrack_Play__Dislike_Svg alt="dislike" width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8.02203 12.7031C13.9025 9.20312 16.9678 3.91234 13.6132 1.47046C11.413 -0.13111 8.95392 1.14488 8.02203 1.95884H8.00052H8.00046H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00046H8.00052H8.02203Z" fill="#B672FF"/>
+                          <path d="M8.00046 1.95884H8.02203C8.95392 1.14488 11.413 -0.13111 13.6132 1.47046C16.9678 3.91234 13.9025 9.20312 8.02203 12.7031H8.00046M8.00052 1.95884H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00052" stroke="#B672FF"/>
+                        </StyledTrack_Play__Dislike_Svg>
+                      </StyledTrack_Play__Dislike>:
+                      <StyledTrack_Play__Like onClick={handleLike}>
+                        <StyledTrack_Play__Like_Svg alt="like">
+                          <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#icon-like":"img/icon/sprite.svg#icon-like"}></use>
+                        </StyledTrack_Play__Like_Svg>
+                      </StyledTrack_Play__Like>:''}
                   </StyledTrack_Play__Like_Dis>
                 </StyledPlayer__Track_Play_Track__Play>
               </StyledBar__Player_Player>
@@ -156,7 +200,7 @@ function Bar(props){
                 <StyledVolume__Content>
                   <StyledVolume__Image onClick={switchMute}>
                     <StyledVolume__Svg alt="volume">
-                      <use xlinkHref="img/icon/sprite.svg#icon-volume"></use>
+                      <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#icon-volume":"img/icon/sprite.svg#icon-volume"}></use>
                     </StyledVolume__Svg>
                   </StyledVolume__Image>
                   <StyledVolume__Progress>

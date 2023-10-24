@@ -9,9 +9,10 @@ import { StyledColumn1, StyledColumn2,
   StyledTrack__Time_Text, StyledTrack__Title, 
   StyledTrack__Title_Image, StyledTrack__Title_Link, 
   StyledTrack__Title_Span, StyledTrack__Title_Svg, StyledBubble } from "./styles";
-import { isOnMyPlayList, setCurrentSong, togglePlay, addSongToMyShuffledPlaylist, deleteSongFromMyShuffledPlaylist } from "../../../../store/slices/playerSlice";
+import { isOnMyPlayList, setCurrentSong, togglePlay, addSongToMyShuffledPlaylist, deleteSongFromMyShuffledPlaylist, setWasChosenOnCategory } from "../../../../store/slices/playerSlice";
 export default function PlayList__item(props){
   const isSkeleton = useSelector(state=>state.theme.isSkeleton);
+  const isOnCategory = useSelector(state=>state.player.isOnCategory);
   const {data = []} = useGetAllTracksQuery();
   const [likeSong] = useAddSongToFavoritesMutation(); 
   const [dislikeSong] = useDeleteSongFromFavoritesMutation()
@@ -38,22 +39,25 @@ export default function PlayList__item(props){
   const user = useSelector(state=>state.user.user);
   const {theme} = useThemeContext();
   const dispatch = useDispatch();
-  
   const isPlaying =useSelector(state=>state.player.isPlaying); 
   const accessToken = useSelector(state=>state.user.accessToken);
     return(
           <StyledPlaylist__Item>
-            <StyledPlaylist__Track_Track onClick={()=>{
+            <StyledPlaylist__Track_Track onClick={(e)=>{
+                  if(e.target.nodeName==="use"||e.target.nodeName==="path"){
+                    return
+                  }
                   dispatch(setCurrentSong(props.song));
                   dispatch(togglePlay(true));
                   dispatch(isOnMyPlayList(props.mine));
+                  dispatch(setWasChosenOnCategory(props.category));
                 }}>
               <StyledTrack__Title>
                 <StyledTrack__Title_Image>
-                {isSkeleton?<img src='/img/Group12.png'></img>:props.active?isPlaying?
+                {isSkeleton?<img src={isOnCategory?'../img/Group12.png':'img/Group12.png'}></img>:props.active?isPlaying?
                   <StyledBubble></StyledBubble>:<StyledCircle></StyledCircle>:
                   <StyledTrack__Title_Svg active={props.active.toString()} alt="music">  
-                      <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                      <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#icon-note":"img/icon/sprite.svg#icon-note"}></use>
                   </StyledTrack__Title_Svg>}
                 </StyledTrack__Title_Image>
                   {isSkeleton ? <StyledColumn1></StyledColumn1>
@@ -74,9 +78,9 @@ export default function PlayList__item(props){
                   <StyledTrack__Album_Link onClick={e=>e.preventDefault()} href="http://">{props.song.album}</StyledTrack__Album_Link>
                   </StyledTrack__Album>
                   <div className='track__time'>
-                    {data && data.find(elem=>elem.id===props.number).stared_user.find(person=>person.email===user.mail)===undefined?
+                    {(data[0].stared_user !== undefined) && data.find(elem=>elem.id===props.number).stared_user.find(person=>person.email===user.mail)===undefined?
                       <StyledTrack__Time_Svg onClick={handleLike} alt="time">
-                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+                        <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#icon-like":"img/icon/sprite.svg#icon-like"}></use>
                       </StyledTrack__Time_Svg>:
                       <StyledTrack__Time_Svg onClick={handleDislike} width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.02203 12.7031C13.9025 9.20312 16.9678 3.91234 13.6132 1.47046C11.413 -0.13111 8.95392 1.14488 8.02203 1.95884H8.00052H8.00046H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00046H8.00052H8.02203Z" fill="#B672FF"/>

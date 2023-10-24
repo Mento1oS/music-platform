@@ -7,11 +7,15 @@ import { useGetAllTracksInitialQuery } from '../../../../store/middlewares/favor
 export default function Index({children}){
   const refreshToken = useSelector(state=>state.user.refreshToken);
   const user = useSelector(state=>state.user.user);
+  const tracks = useSelector(state=>state.player.trackList);
   const dispatch = useDispatch();
   const {data =[], isSuccess} = useGetAllTracksInitialQuery();
   useEffect(()=>{
     dispatch(setTracks(data));
   },[isSuccess]);
+  useEffect(()=>{
+    dispatch(setIsSkeleton(false));
+  },[tracks.length>0]);
     const interval=useRef(0);
     useEffect(()=>{
         fetch("https://skypro-music-api.skyeng.tech/user/token/", {
@@ -28,7 +32,6 @@ export default function Index({children}){
         .then((json) => {
           dispatch(setRefreshToken(json.refresh));
           dispatch(setAccessToken(json.access));
-          dispatch(setIsSkeleton(false));
           console.log(json);
           return(json)})
         .then((data)=>{

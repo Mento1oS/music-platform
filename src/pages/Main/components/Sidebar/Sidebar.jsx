@@ -7,11 +7,16 @@ import { StyledMain__Sidebar, StyledSidebar__Icon,
 import { useThemeContext } from '../../../../providers/ThemeProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsToPass, setUser } from '../../../../store/slices/userSlice';
+import { setIsOnCategory } from '../../../../store/slices/playerSlice';
 function Sidebar(props){
   const {theme} = useThemeContext();
+  const isOnCategory = useSelector(state=>state.player.isOnCategory)
   const isSkeleton = useSelector(state=>state.theme.isSkeleton);
   const dispatch = useDispatch();
   const user = useSelector(state=>state.user.user);
+  const setCategory =()=>{
+    dispatch(setIsOnCategory(true));
+  }
     return(
         <StyledMain__Sidebar>
             <StyledSidebar__Personal>
@@ -25,7 +30,7 @@ function Sidebar(props){
                   dispatch(setIsToPass(false));}} to='./signin'>
                 {theme.name==='dark'?
                   <svg alt="logout">
-                    <use xlinkHref="img/icon/sprite.svg#logout"></use>
+                    <use xlinkHref={isOnCategory?"../img/icon/sprite.svg#logout":"img/icon/sprite.svg#logout"}></use>
                   </svg>:
                   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M25.6711 16.046V14.7419C25.6711 13.2276 24.4435 12 22.9292 12H16.7419C15.2276 12 14 13.2276 14 14.7419V26.0645C14 27.5788 15.2276 28.8065 16.7419 28.8065H22.9292C24.4435 28.8065 25.6711 27.5788 25.6711 26.0645V24.6048M18.3572 20.3254H33.2963M33.2963 20.3254L30.1062 23.5155M33.2963 20.3254L30.1062 17.1353" stroke="black" strokeLinecap="round" strokeLinejoin="round"/>
@@ -38,25 +43,25 @@ function Sidebar(props){
             <StyledStyled__Block>
               <StyledSidebar__List>
                 <StyledSidebar__Item>
-                  <StyledSidebar__Link to='compilation/1'>
+                  <StyledSidebar__Link to='category/1' onClick={setCategory}>
                     {isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
-                      src="img/playlist01.png"
+                      src={isOnCategory?"../img/playlist01.png":"img/playlist01.png"}
                       alt="day's playlist"
                     />}
                   </StyledSidebar__Link>
                 </StyledSidebar__Item>
                 <StyledSidebar__Item>
-                  <StyledSidebar__Link to='/compilation/2'>
+                  <StyledSidebar__Link to='/category/2' onClick={setCategory}>
                     {isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
-                      src="img/playlist02.png"
+                      src={isOnCategory?"../img/playlist02.png":"img/playlist02.png"}
                       alt="day's playlist"
                     />}
                   </StyledSidebar__Link>
                 </StyledSidebar__Item>
                 <StyledSidebar__Item>
-                  <StyledSidebar__Link to='compilation/3'>
+                  <StyledSidebar__Link to='category/3' onClick={setCategory}>
                     {isSkeleton?<StyledSkeleton></StyledSkeleton>:<StyledSidebar__Img
-                      src="img/playlist03.png"
+                      src={isOnCategory?"../img/playlist03.png":"img/playlist03.png"}
                       alt="day's playlist"
                     />}
                   </StyledSidebar__Link>

@@ -23,7 +23,20 @@ const playerSlice = createSlice({
         shuffledTrackList: [],
         isActive: false,
         onMyPlaylist: false,
-        shuffledMyPlaylist: []
+        shuffledMyPlaylist: [],
+        singers:[],
+        years:[],
+        genres:[],
+        search:'',
+        rockTracks:[],
+        electricTracks:[],
+        classicTracks:[],
+        shuffledRock:[],
+        shuffledElectric:[],
+        shuffledClassic:[],
+        isOnCategory: false,
+        wasChosenOnCategory:false,
+        shuffledCategoryTracks:[]
     },
     reducers: {
         toggleMute(state, action){
@@ -51,8 +64,14 @@ const playerSlice = createSlice({
             if(!state.isShuffle){
                 const dummy = [...state.trackList];
                 const myDummy = [...action.payload];
+                const rockDummy = [...state.rockTracks];
+                const electricDummy = [...state.electricTracks];
+                const classicDummy = [...state.classicTracks];
                 shuffleArray(dummy);
                 shuffleArray(myDummy);
+                shuffleArray(rockDummy);
+                shuffleArray(electricDummy);
+                shuffleArray(classicDummy);
                 function shuffleArray(array) {
                     for (var i = array.length - 1; i > 0; i--) {
                         var j = Math.floor(Math.random() * (i + 1));
@@ -62,13 +81,30 @@ const playerSlice = createSlice({
                     }
                 }
                 state.shuffledMyPlaylist = myDummy;
-                state.shuffledTrackList = dummy;   
+                state.shuffledTrackList = dummy;
+                state.shuffledRock=rockDummy;
+                state.shuffledElectric = electricDummy;
+                state.shuffledClassic = classicDummy;   
             }
             else{
                 state.shuffledMyPlaylist = [];
                 state.shuffledTrackList = [];
+                state.shuffledRock = [];
+                state.shuffledElectric = [];
+                state.shuffledClassic = [];  
             }
             state.isShuffle = !state.isShuffle;
+        },
+        findCategoryArray(state, action){
+            if(state.rockTracks.find(song=>song.id===state.currentSong.id)){
+                state.shuffledCategoryTracks = state.shuffledRock;
+            }
+            if(state.electricTracks.find(song=>song.id===state.currentSong.id)){
+                state.shuffledCategoryTracks = state.shuffledElectric;
+            }
+            if(state.classicTracks.find(song=>song.id===state.currentSong.id)){
+              state.shuffledCategoryTracks = state.shuffledClassic;
+            }
         },
         playNextSong(state, action){
             const skipTrack=(array)=>{
@@ -81,7 +117,7 @@ const playerSlice = createSlice({
                 skipTrack(action.payload?action.payload:state.trackList);
             }
             else{
-                skipTrack(action.payload?state.shuffledMyPlaylist:state.shuffledTrackList);
+                skipTrack(state.wasChosenOnCategory?state.shuffledCategoryTracks:state.onMyPlaylist?state.shuffledMyPlaylist:state.shuffledTrackList);
             }
         },
         playPrevSong(state, action){
@@ -95,7 +131,7 @@ const playerSlice = createSlice({
                 returnToTrack(action.payload?action.payload:state.trackList);
             }
             else{
-                returnToTrack(action.payload?state.shuffledMyPlaylist:state.shuffledTrackList);
+                returnToTrack(state.wasChosenOnCategory?state.shuffledCategoryTracks:state.onMyPlaylist?state.shuffledMyPlaylist:state.shuffledTrackList);
             }
         },
         isOnMyPlayList(state, action){
@@ -106,10 +142,45 @@ const playerSlice = createSlice({
         },
         deleteSongFromMyShuffledPlaylist(state, action){
             state.shuffledMyPlaylist = state.shuffledMyPlaylist.filter(elem=>elem.id!==action.payload.id);
+        },
+        setSingers(state, action){
+            state.trackList.map((elem)=>{
+                !state.singers.includes(elem.author)?state.singers.push(elem.author):'';
+            })
+        },
+        setYears(state, action){
+            state.trackList.map((elem)=>{
+                !state.years.includes(elem.release_date)?state.years.push(elem.release_date):'';
+            })
+        },
+        setGenres(state, action){
+            state.trackList.map((elem)=>{
+                !state.genres.includes(elem.genre)?state.genres.push(elem.genre):'';
+            })
+        },
+        setSearch(state, action){
+            state.search = action.payload;
+        },
+        setElectricTracks(state, action){
+            state.electricTracks = action.payload;
+        },
+        setRockTracks(state, action){
+            state.rockTracks = action.payload;
+        },
+        setClassicTracks(state, action){
+            state.classicTracks = action.payload;
+        },
+        setIsOnCategory(state, action){
+            state.isOnCategory = action.payload;
+        },
+        setWasChosenOnCategory(state, action){
+            state.wasChosenOnCategory = action.payload;
         }
     },
 });
 export const {toggleMute, toggleLoop, togglePlay, setCurrentDuration, setCurrentSong, setCurrentTime, setTracks,
-    toggleShuffle, playNextSong, playPrevSong, isOnMyPlayList, deleteSongFromMyShuffledPlaylist, addSongToMyShuffledPlaylist} = playerSlice.actions;
+    toggleShuffle, playNextSong, playPrevSong, isOnMyPlayList, deleteSongFromMyShuffledPlaylist, addSongToMyShuffledPlaylist,
+    setGenres, setSingers, setYears, setSearch, setClassicTracks, setElectricTracks, setRockTracks, setIsOnCategory,
+    setWasChosenOnCategory, findCategoryArray} = playerSlice.actions;
 
 export default playerSlice.reducer;

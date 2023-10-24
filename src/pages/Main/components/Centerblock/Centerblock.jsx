@@ -14,17 +14,34 @@ import { StyledCenterblock__Content, StyledCenterblock__Filter,
 import { useThemeContext } from '../../../../providers/ThemeProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { statusChange } from '../../../../store/slices/dropoutStatusSlice';
+import { useEffect } from 'react';
+import { setClassicTracks, setElectricTracks, setGenres, setIsOnCategory, setRockTracks, setSearch, setSingers, setYears } from '../../../../store/slices/playerSlice';
 function Centerblock(props){
     const dispatch = useDispatch();
     const tracks = useSelector(state=>state.player.trackList);
     const currentSong = useSelector(state=>state.player.currentSong);
     const dropoutStatus = useSelector(state => state.dropoutStatus.status);
     const isSkeleton = useSelector(state=>state.theme.isSkeleton);
-    const singers=['messi', 'Noize MC', 'RHCP', 'Pyrokinesis', 'Joy Division', 'Lol', 'mocker'];
-    const years = ['1987', '2022', '1995', '2015', '1980'];
-    const genres = ['rock', 'rap', 'hip-hop', 'post-punk', 'alternative rock', 'punk-rock'];
+    const singers = useSelector(state=>state.player.singers);
+    const years = useSelector(state=>state.player.years);
+    const genres = useSelector(state=>state.player.genres);
+    const search = useSelector(state=>state.player.search);
+    useEffect(()=>{
+      dispatch(setSingers());
+      dispatch(setGenres());
+      dispatch(setYears());
+      dispatch(setRockTracks(tracks.filter(elem=>elem.genre==='Рок музыка')));
+      dispatch(setElectricTracks(tracks.filter(elem=>elem.genre==='Электронная музыка')));
+      dispatch(setClassicTracks(tracks.filter(elem=>elem.genre==='Классическая музыка')));
+    }, [tracks.length>0]);
+    useEffect(()=>{
+      dispatch(setIsOnCategory(false));
+    },[]);
     const switchHandle=(e)=>{
       const target = e.target;
+      if(target.nodeName=='LI'){
+        return
+      }
       const parent = target.parentElement;
       const children = Array.from(parent.children);
       const index = children.indexOf(target)-1;
@@ -46,6 +63,8 @@ function Centerblock(props){
                 type="search"
                 placeholder="Поиск"
                 name="search"
+                value={search}
+                onInput={e=>dispatch(setSearch(e.target.value))}
               />
             </StyledCenterblock__Search_Search>
             <StyledCenterblock__h2>Треки</StyledCenterblock__h2>
@@ -87,7 +106,7 @@ function Centerblock(props){
                 <PlayList__item active={false} title='' author='' album='' duration=''/>
                 <PlayList__item active={false} title='' author='' album='' duration=''/>
                 <PlayList__item active={false} title='' author='' album='' duration=''/></>
-                :tracks.map((elem=><PlayList__item mine={false} active={elem.id===currentSong.id} number={elem.id} key={elem.id} song={elem}/>))
+                :tracks.filter(elem=>elem.name.includes(search)).map((elem=><PlayList__item category={false} mine={false} active={elem.id===currentSong.id} number={elem.id} key={elem.id} song={elem}/>))
                 }
               </StyledContent__Playlist_Playlist>
             </StyledCenterblock__Content>

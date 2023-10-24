@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { Layout } from './Main/components/Layout/Layout';
 import Centerblock from './Main/components/Centerblock/Centerblock';
 import MyPlaylist from './Main/components/MyPlaylist/MyPlaylist';
+import Compilation from './Main/components/Compilation/Compilation';
 export default function AppRoutes(props){
     const isToPass = useSelector(state => state.user.isToPass);
     return(
@@ -15,6 +16,7 @@ export default function AppRoutes(props){
                 <Route path='/' element={<Layout/>}>
                     <Route index element={<Centerblock/>}></Route>
                     <Route path='/myplaylist' element={<MyPlaylist/>}></Route>
+                    <Route path='/category/:id' element={<Compilation/>}></Route>
                 </Route>
             </Route>
             <Route path="/signin" element={<SignIn/>} />
