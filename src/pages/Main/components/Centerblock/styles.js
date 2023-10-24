@@ -122,6 +122,9 @@ export const Styled_Btn_Text_Filter_Button_Year = styled(Styled_Btn_Text_Filter_
 export const Styled_Btn_Text_Filter_Button_Genre = styled(Styled_Btn_Text_Filter_Button)`
     
 `;
+export const StyledSortButton = styled(Styled_Btn_Text_Filter_Button)`
+
+`;
 export const StyledCenterblock__h2 = styled.h2`
     font-style: normal;
     font-weight: 400;
@@ -233,5 +236,40 @@ export const StyledFilter__List__Wrapper_Year__List = styled(StyledFilter__List_
 `;
 export const StyledFilter__List__Wrapper_Genre__List = styled(StyledFilter__List__Wrapper)`
 `;
+export const StyledSortingWrapper__List = styled(StyledFilter__List__Wrapper)`
+`;
+export const StyledCounter = styled.div`
+    position: absolute;
+    top:-9px;
+    right:-9px;
+    color:${({theme})=>theme.main_fonts};
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 13px;
+    padding: 6px 9px;
+    background-color: #AD61FF;
+    border-radius: 50%;
+`;
+export const StyledSortFilterBlock = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+export const StyledSort = styled.div`
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 51px;  
+`;
+    
 
 

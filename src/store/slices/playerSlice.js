@@ -36,7 +36,15 @@ const playerSlice = createSlice({
         shuffledClassic:[],
         isOnCategory: false,
         wasChosenOnCategory:false,
-        shuffledCategoryTracks:[]
+        shuffledCategoryTracks:[],
+        filters:{
+            author:[],
+            genre:[],
+            release_date:[]
+        },
+        currentSorting: 'По умолчанию',
+        sortingIsOpen: false,
+        sortVariants: ['По умолчанию', 'Сначала старые', 'Сначала новые']
     },
     reducers: {
         toggleMute(state, action){
@@ -175,12 +183,25 @@ const playerSlice = createSlice({
         },
         setWasChosenOnCategory(state, action){
             state.wasChosenOnCategory = action.payload;
+        },
+        addFilter(state, action){
+            state.filters[action.payload.key].push(action.payload.elem);
+        },
+        removeFilter(state, action){
+            const index = state.filters[action.payload.key].indexOf(action.payload.elem);
+            state.filters[action.payload.key].splice(index,1);
+        },
+        setCurrentSorting(state, action){
+            state.currentSorting = action.payload;
+        },
+        toggleSortingIsOpen(state, action){
+            state.sortingIsOpen = !state.sortingIsOpen;
         }
     },
 });
 export const {toggleMute, toggleLoop, togglePlay, setCurrentDuration, setCurrentSong, setCurrentTime, setTracks,
     toggleShuffle, playNextSong, playPrevSong, isOnMyPlayList, deleteSongFromMyShuffledPlaylist, addSongToMyShuffledPlaylist,
     setGenres, setSingers, setYears, setSearch, setClassicTracks, setElectricTracks, setRockTracks, setIsOnCategory,
-    setWasChosenOnCategory, findCategoryArray} = playerSlice.actions;
+    setWasChosenOnCategory, findCategoryArray, addFilter, removeFilter, setCurrentSorting, toggleSortingIsOpen} = playerSlice.actions;
 
 export default playerSlice.reducer;

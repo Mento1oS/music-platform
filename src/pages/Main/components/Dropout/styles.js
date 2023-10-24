@@ -25,6 +25,7 @@ export const StyledDropout__Elements = styled.ul`
     padding: 2.5px 34px 2.5px 2.5px;
 `;
 export const StyledDropout__Elem = styled.li`
+    ${({active})=>active==='true'?`color: #ad61ff;`:`color:inherit;`}
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
