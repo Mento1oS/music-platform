@@ -14,7 +14,8 @@ const userSlice = createSlice({
         signIn: {
             mail: '',
             password: ''
-        }
+        },
+        refreshTime: 80000
     },
     reducers:{
         setIsToPass(state, action){

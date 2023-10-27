@@ -28,7 +28,6 @@ export default function SignIn(props){
         }
         return response.json()})
       .then((response)=>{
-        console.log(response);
         dispatch(setIsToPass(true));
         dispatch(setUser({
           mail: signIn.mail,
