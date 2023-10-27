@@ -8,6 +8,7 @@ export default function Index({children}){
   const refreshToken = useSelector(state=>state.user.refreshToken);
   const user = useSelector(state=>state.user.user);
   const tracks = useSelector(state=>state.player.trackList);
+  const refreshTime = useSelector(state=>state.user.refreshTime);
   const dispatch = useDispatch();
   const {data =[], isSuccess} = useGetAllTracksInitialQuery();
   useEffect(()=>{
@@ -32,7 +33,6 @@ export default function Index({children}){
         .then((json) => {
           dispatch(setRefreshToken(json.refresh));
           dispatch(setAccessToken(json.access));
-          console.log(json);
           return(json)})
         .then((data)=>{
           interval.current = setInterval(() => {
@@ -47,10 +47,8 @@ export default function Index({children}){
             })
             .then((response) => response.json())
             .then((json) =>{
-              console.log(data);
-              console.log(json);
               dispatch(setAccessToken(json.access));});
-            }, 80000);
+            }, refreshTime);
         })
       return () => clearInterval(interval.current)
     },[]);
