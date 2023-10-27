@@ -1,12 +1,12 @@
-import Centerblock from '../Centerblock/Centerblock';
+
 import Nav from '../Nav/Nav';
 import { StyledMain } from './styles';
 import Sidebar from '../Sidebar/Sidebar';
-function Main(props){
+function Main({children}){
     return(         
         <StyledMain>
           <Nav/>
-          <Centerblock/>
+          {children}
           <Sidebar/>
         </StyledMain>
     );

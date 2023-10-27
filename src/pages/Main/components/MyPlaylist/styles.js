@@ -76,55 +76,7 @@ export const StyledSearch__Text = styled.input`
         line-height: 24px;
       }
 `;
-const Styled_Btn_Text = styled.div`
-    &:hover {
-        border-color: #d9b6ff;
-        color: #d9b6ff;
-        cursor: pointer;
-      }
-`;
-const Styled_Btn_Text_Filter_Button= styled(Styled_Btn_Text)`
-    position: relative;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    border: 1px solid ${({theme})=>theme.main_fonts};
-    border-radius: 60px;
-    padding: 6px 20px;  
-    &:not(:last-child) {
-        margin-right: 10px;
-      }
-    ${({dropout})=>{
-        if(dropout==='true'){ 
-            return(`
-                color: #ad61ff;
-                border-color: #ad61ff;
-                &:hover{
-                    color: #ad61ff;
-                    border-color: #ad61ff;
-                }
-                &:active{
-                    color: #ad61ff;
-                    border-color: #ad61ff;
-                }`)}
-        else{
-            return``
-        }
-    }}
-`;
-export const Styled_Btn_Text_Filter_Button_Author = styled(Styled_Btn_Text_Filter_Button)`
-    
-`;
-export const Styled_Btn_Text_Filter_Button_Year = styled(Styled_Btn_Text_Filter_Button)`
-      
-`;
-export const Styled_Btn_Text_Filter_Button_Genre = styled(Styled_Btn_Text_Filter_Button)`
-    
-`;
-export const StyledSortButton = styled(Styled_Btn_Text_Filter_Button)`
 
-`;
 export const StyledCenterblock__h2 = styled.h2`
     font-style: normal;
     font-weight: 400;
@@ -132,19 +84,6 @@ export const StyledCenterblock__h2 = styled.h2`
     line-height: 72px;
     letter-spacing: -0.8px;
     margin-bottom: 45px;  
-`;
-export const StyledCenterblock__Filter = styled.div`
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    margin-bottom: 51px;  
 `;
 export const StyledCenterblock__Content = styled.div`
     display: -webkit-box;
@@ -155,13 +94,7 @@ export const StyledCenterblock__Content = styled.div`
     -ms-flex-direction: column;
     flex-direction: column;
 `;
-export const StyledFilter__Title = styled.div`
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    margin-right: 15px;  
-`;
+
 const StyledContent__Title = styled.div`
     display: -webkit-box;
     display: -ms-flexbox;
@@ -230,46 +163,5 @@ const StyledFilter__List__Wrapper = styled.div`
     padding: 34px 24px 34px 34px;
     border-radius: 12px; 
 `;
-export const StyledFilter__List__Wrapper_Author__List = styled(StyledFilter__List__Wrapper)`
-`;
-export const StyledFilter__List__Wrapper_Year__List = styled(StyledFilter__List__Wrapper)`
-`;
-export const StyledFilter__List__Wrapper_Genre__List = styled(StyledFilter__List__Wrapper)`
-`;
-export const StyledSortingWrapper__List = styled(StyledFilter__List__Wrapper)`
-`;
-export const StyledCounter = styled.div`
-    position: absolute;
-    top:-9px;
-    right:-9px;
-    color:${({theme})=>theme.main_fonts};
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 13px;
-    padding: 6px 9px;
-    background-color: #AD61FF;
-    border-radius: 50%;
-`;
-export const StyledSortFilterBlock = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-`;
-
-export const StyledSort = styled.div`
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    margin-bottom: 51px;  
-`;
-    
 
 

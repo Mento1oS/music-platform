@@ -1,16 +1,21 @@
-import { Fragment, useEffect, useRef } from 'react';
-import { useState } from 'react';
-import Bar from '../Bar/Bar';
-import Main from '../Main/Main';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTracks } from '../../../../store/slices/playerSlice';
 import { setIsSkeleton } from '../../../../store/slices/themeSlice';
 import { setAccessToken, setRefreshToken } from '../../../../store/slices/userSlice';
-export default function Index(props){
-  const currentSong = useSelector(state=>state.player.currentSong);
+import { useGetAllTracksInitialQuery } from '../../../../store/middlewares/favorites';
+export default function Index({children}){
   const refreshToken = useSelector(state=>state.user.refreshToken);
   const user = useSelector(state=>state.user.user);
+  const tracks = useSelector(state=>state.player.trackList);
   const dispatch = useDispatch();
+  const {data =[], isSuccess} = useGetAllTracksInitialQuery();
+  useEffect(()=>{
+    dispatch(setTracks(data));
+  },[isSuccess]);
+  useEffect(()=>{
+    dispatch(setIsSkeleton(false));
+  },[tracks.length>0]);
     const interval=useRef(0);
     useEffect(()=>{
         fetch("https://skypro-music-api.skyeng.tech/user/token/", {
@@ -44,28 +49,12 @@ export default function Index(props){
             .then((json) =>{
               console.log(data);
               console.log(json);
-              dispatch(setAccessToken(json.access))});
+              dispatch(setAccessToken(json.access));});
             }, 80000);
         })
       return () => clearInterval(interval.current)
     },[]);
-    useEffect(()=>{
-      fetch("https://skypro-music-api.skyeng.tech/catalog/track/all/", {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        dispatch(setTracks(json));
-        dispatch(setIsSkeleton(false));
-      })},[]);
   return(
-      <Fragment>
-          <Main/>
-          {currentSong.track_file?<Bar/>:''}
-      </Fragment>
+      children 
   )
 }

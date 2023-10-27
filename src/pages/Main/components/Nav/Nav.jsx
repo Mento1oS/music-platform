@@ -5,18 +5,19 @@ import { StyledMain__Nav_Nav, StyledBurger__Line,
   StyledNav__Burger_Burger, StyledNav__Logo_Logo, 
   StyledNav__Menu_Menu} from './styles';
 import { useThemeContext } from '../../../../providers/ThemeProvider';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setIsToPass, setUser } from '../../../../store/slices/userSlice';
 function Nav(props){
     const [isVisibleBurger, setIsVisibleBurger] = useState(true);
     const {toggleTheme, theme} =useThemeContext();
     const dispatch = useDispatch();
+    const isOnCategory = useSelector(state=>state.player.isOnCategory);
     return(
         <StyledMain__Nav_Nav theme={theme}>
             <StyledNav__Logo_Logo>
               {theme.name==='dark'?
-                <StyledLogo__Image src="img/logo.png" alt="logo" />:
-                <StyledLogo__Image src="img/logo_modal.png" alt="logo" />}
+                <StyledLogo__Image src={isOnCategory?"../img/logo.png":"img/logo.png"} alt="logo" />:
+                <StyledLogo__Image src={isOnCategory?"../img/logo_modal.png":"img/logo_modal.png"} alt="logo" />}
             </StyledNav__Logo_Logo>
             <StyledNav__Burger_Burger onClick={()=>setIsVisibleBurger(!isVisibleBurger)}>
               <StyledBurger__Line theme={theme}></StyledBurger__Line>

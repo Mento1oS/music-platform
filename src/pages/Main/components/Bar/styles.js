@@ -337,7 +337,6 @@ const StyledTrack_Play__ = styled.div`
 export const StyledTrack_Play__Like = styled(StyledTrack_Play__)`
 `;
 export const StyledTrack_Play__Dislike = styled(StyledTrack_Play__)`
-  margin-left: 28.5px;  
 `;
 export const StyledTrack_Play__Like_Svg = styled.svg`
     width: 14px;
