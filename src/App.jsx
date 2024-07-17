@@ -7,23 +7,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentTheme } from './store/slices/themeSlice';
 function App() {
   const dispatch = useDispatch();
-  const currentTheme = useSelector(state=>state.theme.currentTheme);
-  useEffect(()=>{
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
+  useEffect(() => {
     dispatch(setCurrentTheme(themes.dark));
-  },[]);
-  const toggleTheme = ()=>{
-    if(currentTheme===themes.dark){
+  }, []);
+  const toggleTheme = () => {
+    if (currentTheme === themes.dark) {
       dispatch(setCurrentTheme(themes.light));
-      return}
+      return;
+    }
     dispatch(setCurrentTheme(themes.dark));
-  }
+  };
   return (
-    <ThemeContext.Provider value={{theme: currentTheme, toggleTheme}}>
+    <ThemeContext.Provider value={{ theme: currentTheme, toggleTheme }}>
       <div className="App">
         <Wrapper theme={currentTheme}>
           <Container theme={currentTheme}>
-            <GlobalStyle theme={currentTheme}/>
-            <AppRoutes/>
+            <GlobalStyle theme={currentTheme} />
+            <AppRoutes />
             <footer className="footer"></footer>
           </Container>
         </Wrapper>
